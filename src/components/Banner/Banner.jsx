@@ -1,18 +1,28 @@
 import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css"
+import Banner1 from '../../assets/Banner-1.png';
+import Banner2 from '../../assets/Banner-2.png';
+import Banner3 from '../../assets/Banner-3.png';
+import Banner4 from '../../assets/banner-4.png';
 const Banner = () => {
     return (
-        <Carousel>
+        <Carousel
+            autoPlay={true}
+            infiniteLoop={true}
+            dynamicHeight={true}
+            emulateTouch={true}
+        >
             <div>
-                <img src="assets/1.jpeg" />
-                <p className="legend">Legend 1</p>
+                <img  src={Banner1} />
             </div>
             <div>
-                <img src="assets/2.jpeg" />
-                <p className="legend">Legend 2</p>
+                <img src={Banner2} />
             </div>
             <div>
-                <img src="assets/3.jpeg" />
-                <p className="legend">Legend 3</p>
+                <img className='w-[50px]' src={Banner3} />
+            </div>
+            <div>
+                <img className='w-[50px]' src={Banner4} />
             </div>
         </Carousel>
     );
