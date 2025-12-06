@@ -7,13 +7,14 @@ import Banner4 from '../../assets/banner-4.png';
 const Banner = () => {
     return (
         <Carousel
+            className='mt-10'
             autoPlay={true}
             infiniteLoop={true}
             dynamicHeight={true}
             emulateTouch={true}
         >
             <div>
-                <img  src={Banner1} />
+                <img src={Banner1} />
             </div>
             <div>
                 <img src={Banner2} />
