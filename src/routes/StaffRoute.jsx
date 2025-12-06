@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PrivateRoute = () => {
+const StaffRoute = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const PrivateRoute = () => {
     );
 };
 
-export default PrivateRoute;
+export default StaffRoute;
