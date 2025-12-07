@@ -18,5 +18,5 @@ a.active {
 }
 
 .button {
-  @apply mt-6 bg-indigo-600 hover:bg-indigo-800 text-white  rounded-md cursor-pointer transition
+  @apply  bg-indigo-600 hover:bg-indigo-800 text-white  rounded-md cursor-pointer transition
 }

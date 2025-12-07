@@ -9,6 +9,7 @@ import DashboardLayout from "../layouts/Dashboard/DashboardLayout";
 import DashboardHome from "../layouts/Dashboard/DashboardHome";
 import Bestaff from "../pages/Be a staff/Bestaff";
 import Errorpage from "../pages/Errorpage/Errorpage";
+import IssueDetails from "../pages/IssueALL/IssueDetails";
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -25,14 +26,19 @@ export const router = createBrowserRouter([
 
             },
             {
-                path: 'be_a_staff',
+                path: '/be_a_staff',
                 Component: Bestaff
             },
             {
-                path: 'coverage',
+                path: '/coverage',
                 Component: Coverage
+            },
+            {
+                path:'/issueDetails/:id',
+                element:<IssueDetails></IssueDetails>
             }
-        ]
+        ],
+        
     },
 
     {

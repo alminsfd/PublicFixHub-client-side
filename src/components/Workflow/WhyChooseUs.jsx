@@ -40,7 +40,7 @@ const WhyChooseUs = () => {
             and completely transparent. Citizens get full control and visibility
             throughout the process.
           </p>
-          <button className="button px-5 py-2 ">
+          <button className="button px-5 py-2 mt-4 ">
             Start reporting
           </button>
         </div>
