@@ -26,7 +26,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="max-w-6xl mx-auto px-6 py-16">
+    <section className=" px-6 py-16">
       <h2 className="text-3xl font-bold text-center mb-10">
         How The System Works
       </h2>
@@ -35,7 +35,7 @@ export default function HowItWorks() {
         {steps.map((step, index) => (
           <div
             key={index}
-            className="p-6 bg-white shadow rounded-xl border hover:shadow-lg transition"
+            className="p-6 bg-white shadow rounded-xl border border-[#ddd] hover:shadow-lg transition"
           >
             <div className="w-12 h-12 flex items-center justify-center bg-indigo-600 text-white rounded-full text-lg font-bold mb-4">
               {index + 1}

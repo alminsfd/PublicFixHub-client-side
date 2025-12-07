@@ -30,7 +30,7 @@ const WhyChooseUs = () => {
   ];
   return (
     <section className="py-16 px-6 md:px-12 lg:px-20">
-      <div className="max-w-6xl mx-auto   flex flex-col md:flex-row justify-around items-center gap-5">
+      <div className=" flex flex-col md:flex-row justify-around items-center gap-5">
 
         {/* LEFT SECTION */}
         <div className="mb-10">
