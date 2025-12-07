@@ -3,18 +3,20 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-
-
-.playwrite{
+.playwrite {
   font-family: "Playwrite NO", cursive;
 }
 
-*{
-    font-family: "Montserrat", sans-serif;
+* {
+  font-family: "Montserrat", sans-serif;
 }
 
-a.active{
+a.active {
   text-decoration: underline;
   color: aqua;
-  
+
+}
+
+.button {
+  @apply mt-6 bg-indigo-600 hover:bg-indigo-800 text-white  rounded-md cursor-pointer transition
 }

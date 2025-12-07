@@ -48,7 +48,7 @@ export default function HowItWorks() {
       </div>
 
       <div className="mt-12 text-center">
-        <Link className="px-5 py-3 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition">
+        <Link className="px-5 py-3 button ">
           Report an Issue
         </Link>
       </div>
