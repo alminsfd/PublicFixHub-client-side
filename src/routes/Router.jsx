@@ -3,16 +3,17 @@ import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home/Home";
 import Allissue from "../pages/IssueALL/Allissue";
 import PrivateRoute from "./PrivateRoute";
-import StaffRoute from "./StaffRoute";
 import AdminRoute from "./AdminRoute";
 import Coverage from "../pages/Covrage/Coverage";
 import DashboardLayout from "../layouts/Dashboard/DashboardLayout";
 import DashboardHome from "../layouts/Dashboard/DashboardHome";
-import Bestaff from "../pages/Be a rider/Bestaff";
+import Bestaff from "../pages/Be a staff/Bestaff";
+import Errorpage from "../pages/Errorpage/Errorpage";
 export const router = createBrowserRouter([
     {
         path: "/",
         Component: MainLayout,
+        errorElement:<Errorpage></Errorpage>,
         children: [
             {
                 index: true,

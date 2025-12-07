@@ -11,8 +11,8 @@ export default function Footer({ links }) {
             <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
 
                 {/* Logo + About */}
-                <div>
-                    <div className="flex items-start justify-center gap-1 " >
+                <div className="text-justify">
+                    <div className="flex items-start justify-start gap-1 " >
                         <img className="w-8 rounded-full" src={logo} alt="" />
                         <h2 className="text-2xl font-bold text-white mb-3">PublicFixHub</h2>
                     </div>
