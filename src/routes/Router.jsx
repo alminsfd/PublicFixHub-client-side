@@ -2,8 +2,6 @@ import { createBrowserRouter } from "react-router";
 import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home/Home";
 import Allissue from "../pages/IssueALL/Allissue";
-import PrivateRoute from "./PrivateRoute";
-import AdminRoute from "./AdminRoute";
 import Coverage from "../pages/Covrage/Coverage";
 import DashboardLayout from "../layouts/Dashboard/DashboardLayout";
 import DashboardHome from "../layouts/Dashboard/DashboardHome";
