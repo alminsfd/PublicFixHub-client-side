@@ -1,14 +1,15 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../hooks/useAuth';
-import { Link,  useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import SocialLogin from './SocialLogin';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const Register = () => {
-    const { registerUser,updateUserProfile } = useAuth()
-    const navigate=useNavigate()
+    const { registerUser, updateUserProfile } = useAuth()
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -39,7 +40,11 @@ const Register = () => {
                         useAxiosSecure.post('/users', userInfo)
                             .then(res => {
                                 if (res.data.insertedId) {
-                                    console.log('user created in the database');
+                                    Swal.fire({
+                                        title: "Successfully login done.",
+                                        icon: "success",
+                                        draggable: false
+                                    });
                                 }
                             })
 
