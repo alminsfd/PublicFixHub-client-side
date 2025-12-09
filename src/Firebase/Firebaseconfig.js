@@ -1,11 +1,13 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCh_ebhpTy_lpHlbkYFukwkBIn9abH6pSg",
-  authDomain: "reporting-system-69.firebaseapp.com",
-  projectId: "reporting-system-69",
-  storageBucket: "reporting-system-69.firebasestorage.app",
-  messagingSenderId: "395850884236",
-  appId: "1:395850884236:web:4a083cc63b06c7dd2d87a9"
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId,
 };
 const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
