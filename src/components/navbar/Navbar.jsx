@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from './LOGO';
-import { Link, NavLink } from 'react-router';
+import { Link,  NavLink } from 'react-router';
 
 import userImg from '../../assets/user.png';
 
@@ -45,7 +45,8 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end ">
-                <div className="dropdown dropdown-end">
+                <Link to='/login' className=' button px-4 py-2'>Login</Link>
+                <div className="dropdown dropdown-end cursor-pointer ">
                     <div tabIndex={0} role="button" className="m-1">
                         <img className='mr-10' src={userImg} alt="" />
                     </div>

@@ -10,6 +10,9 @@ import DashboardHome from "../layouts/Dashboard/DashboardHome";
 import Bestaff from "../pages/Be a staff/Bestaff";
 import Errorpage from "../pages/Errorpage/Errorpage";
 import IssueDetails from "../pages/IssueALL/IssueDetails";
+import AuthLayout from "../layouts/AuthLayout";
+import Register from "../pages/FORM/Register";
+import Login from "../pages/FORM/Login";
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -40,6 +43,21 @@ export const router = createBrowserRouter([
         ],
         
     },
+
+    {
+    path: '/',
+    Component: AuthLayout,
+    children: [
+      {
+        path: 'login',
+        Component: Login
+      },
+      {
+        path: 'register',
+        Component: Register
+      }
+    ]
+  },
 
     {
         path: 'dashboard',
