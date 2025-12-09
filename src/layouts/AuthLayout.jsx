@@ -6,14 +6,9 @@ import { Outlet } from 'react-router';
     return (
         <div className='max-w-7xl mx-auto'>
             <Logo></Logo>
-            <div className='flex items-center'>
-                <div className='flex-1'>
+                <div>
                     <Outlet></Outlet>
                 </div>
-                <div className='flex-1'>
-                    {/* <img src={authImage} alt="" /> */}
-                </div>
-            </div>
         </div>
     );
  };
