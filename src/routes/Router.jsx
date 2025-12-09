@@ -11,7 +11,7 @@ import IssueDetails from "../pages/IssueALL/IssueDetails";
 import AuthLayout from "../layouts/AuthLayout";
 import Register from "../pages/FORM/Register";
 import Login from "../pages/FORM/Login";
-export const router = createBrowserRouter([
+ export  const router = createBrowserRouter([
     {
         path: "/",
         Component: MainLayout,

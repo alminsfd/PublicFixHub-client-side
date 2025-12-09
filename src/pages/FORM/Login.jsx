@@ -1,11 +1,12 @@
 import React from 'react';
 import { useForm } from "react-hook-form"
 import { Link, useLocation, useNavigate } from 'react-router';
-import useAuth from '../../hooks/useAuth';
 import SocialLogin from './SocialLogin';
+import useAuth from '../../hooks/useAuth';
 
 const Login = () => {
     const {signInUser}=useAuth()
+    console.log('useAuth value',useAuth())
     const navigate=useNavigate()
     const location=useLocation()
 
@@ -48,12 +49,10 @@ const Login = () => {
                     {
                         errors.password?.type === 'minLength' && <p className='text-red-500'>Password must be 6 characters  or longer </p>
                     }
-
-
                     <div><a className="link link-hover">Forgot password?</a></div>
                     <button className="btn btn-neutral mt-4">Login</button>
                 </fieldset>
-                <p>New to Zap Shift <Link
+                <p> Haven't any accout<Link
                     state={location.state}
                     className='text-blue-400 underline'
                     to="/register">Register</Link></p>
