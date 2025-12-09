@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const Register = () => {
+    const axiosSecure = useAxiosSecure();
     const { registerUser, updateUserProfile } = useAuth()
     const navigate = useNavigate()
     const {
@@ -19,9 +20,9 @@ const Register = () => {
     const handleRegister = (data) => {
         const profileImg = data.photo[0];
         console.log(data);
-        console.log('Image', profileImg);
 
-        registerUser(data.email, data.name)
+
+        registerUser(data.email, data.password)
             .then(() => {
 
                 const formData = new FormData();
@@ -37,11 +38,11 @@ const Register = () => {
                             displayName: data.name,
                             photoURL: photoURL
                         }
-                        useAxiosSecure.post('/users', userInfo)
+                        axiosSecure.post('/users', userInfo)
                             .then(res => {
                                 if (res.data.insertedId) {
                                     Swal.fire({
-                                        title: "Successfully login done.",
+                                        title: "Successfully registration done.",
                                         icon: "success",
                                         draggable: false
                                     });
@@ -60,7 +61,15 @@ const Register = () => {
                                 // console.log('user profile updated done.')
                                 navigate(location.state || '/');
                             })
-                            .catch(error => console.log(error))
+                            .catch(error => {
+                                const errorMessage = error.message;
+                                Swal.fire({
+                                    icon: "error",
+                                    text: errorMessage,
+                                    title: "Something went wrong!",
+
+                                });
+                            })
                     })
 
             })

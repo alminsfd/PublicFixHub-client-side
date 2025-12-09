@@ -1,21 +1,47 @@
 import React from 'react';
 import Logo from './LOGO';
-import { Link,  NavLink } from 'react-router';
-
-import userImg from '../../assets/user.png';
+import { Link, NavLink, useNavigate } from 'react-router';
+import useAuth from '../../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 
 const Navbar = () => {
+    const { user, logOut } = useAuth();
+    const navigate = useNavigate()
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                Swal.fire({
+                    title: "Successfully logout done.",
+                    icon: "success",
+                    draggable: false
+                });
+                navigate('login')
+
+            })
+            .catch(error => {
+                const errorMessage = error.message;
+                Swal.fire({
+                    icon: "error",
+                    text: errorMessage,
+                    title: "Something went wrong!",
+
+                });
+            })
+    }
     const links = <>
         <li><NavLink className='text-base' to="/">Home</NavLink></li>
         <li><NavLink className='text-base' to="/issue">All Issues</NavLink></li>
         <li><NavLink className='text-base' to="/be_a_staff">Be a Staff</NavLink></li>
         <li><NavLink className='text-base' to="/coverage">Coverage Areas</NavLink></li>
         {
-            // user && <>
-            //     <li><NavLink to="/dashboard/my-parcels">My Issue</NavLink></li>
-            //     <li><NavLink to="/dashboard"></NavLink></li>
-            // </>
+            user && <>
+                <li><NavLink to="/dashboard/my-issue">My Issue</NavLink></li>
+                <li><NavLink to="/dashboard/my-profile"> Profile </NavLink></li>
+                <li><NavLink to="/dashboard/report-issue"> Report Issue </NavLink></li>
+
+            </>
         }
         {/* <li><NavLink to="">About Us</NavLink></li> */}
 
@@ -45,23 +71,32 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end ">
-                <Link to='/login' className=' button px-4 py-2'>Login</Link>
-                <div className="dropdown dropdown-end cursor-pointer ">
-                    <div tabIndex={0} role="button" className="m-1">
-                        <img className='mr-10' src={userImg} alt="" />
-                    </div>
-                    <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                        <li className='hover:bg-gray-300 hover:text-indigo-500-300' >
-                            <Link>Al Amin Hossain Tanvir</Link>
-                        </li>
-                        <li className='hover:bg-gray-300 hover:text-indigo-500' >
-                            <Link to='dashboard' > Dashboard </Link>
-                        </li>
-                        <li>
-                            <Link  className='btn btn-primary' > Logout </Link>
-                        </li>
-                    </ul>
-                </div>
+                {
+                    user ?
+                        <>
+
+                            <div className="dropdown dropdown-end cursor-pointer  ">
+                                <div tabIndex={0} role="button" className="m-1">
+                                    <img className='w-12 h-12 rounded-full' src={user?.photoURL} alt="" />
+                                </div>
+                                <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                    <li className='hover:bg-gray-300 hover:text-indigo-500' >
+                                        <Link>{user?.displayName}</Link>
+                                    </li>
+                                    <li className='hover:bg-gray-300 hover:text-indigo-500' >
+                                        <Link to='dashboard' > Dashboard </Link>
+                                    </li>
+                                    <li>
+                                        <button onClick={handleLogOut} className='btn btn-primary btn-sm text-white' > Logout </button>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </>
+                        : <Link to='login' className=" button px-4 py-2 ">Log IN</Link>
+
+                }
+
             </div>
         </div>
     );
