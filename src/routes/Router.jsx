@@ -11,11 +11,15 @@ import IssueDetails from "../pages/IssueALL/IssueDetails";
 import AuthLayout from "../layouts/AuthLayout";
 import Register from "../pages/FORM/Register";
 import Login from "../pages/FORM/Login";
- export  const router = createBrowserRouter([
+import PrivateRoute from "./PrivateRoute";
+import Report_issue from "../layouts/Dashboard/Report_issue";
+import MyIssuePage from "../layouts/Dashboard/MyIssuePage";
+import Profile from "../layouts/Dashboard/Profile";
+export const router = createBrowserRouter([
     {
         path: "/",
         Component: MainLayout,
-        errorElement:<Errorpage></Errorpage>,
+        errorElement: <Errorpage></Errorpage>,
         children: [
             {
                 index: true,
@@ -28,45 +32,55 @@ import Login from "../pages/FORM/Login";
             },
             {
                 path: '/be_a_staff',
-                Component: Bestaff
+                element: <PrivateRoute><Bestaff></Bestaff></PrivateRoute>
             },
             {
                 path: '/coverage',
                 Component: Coverage
             },
             {
-                path:'/issueDetails/:id',
-                element:<IssueDetails></IssueDetails>
+                path: '/issueDetails/:id',
+                element: <PrivateRoute><IssueDetails></IssueDetails></PrivateRoute> 
             }
         ],
-        
+
     },
 
     {
-    path: '/',
-    Component: AuthLayout,
-    children: [
-      {
-        path: 'login',
-        Component: Login
-      },
-      {
-        path: 'register',
-        Component: Register
-      }
-    ]
-  },
+        path: '/',
+        Component: AuthLayout,
+        children: [
+            {
+                path: 'login',
+                Component: Login
+            },
+            {
+                path: 'register',
+                Component: Register
+            }
+        ]
+    },
 
     {
         path: 'dashboard',
-        element: <DashboardLayout></DashboardLayout>,
-        // element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
         children: [
             {
-                index:true,
+                index: true,
                 Component: DashboardHome
             },
-
+            {
+                path:'/dashboard/report-issue',
+                element:<PrivateRoute> <Report_issue></Report_issue> </PrivateRoute>
+            },
+            {
+                path:'/dashboard/my-issue',
+                element:<PrivateRoute><MyIssuePage></MyIssuePage></PrivateRoute>
+            },
+            {
+                path:'/dashboard/my-profile',
+                element:<PrivateRoute><Profile></Profile></PrivateRoute>
+            }
             // Staff only routes
 
             //   {
