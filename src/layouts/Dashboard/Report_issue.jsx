@@ -1,9 +1,13 @@
 import axios from 'axios';
 import React from 'react';
 import { useForm, useWatch } from "react-hook-form"
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
+import Swal from 'sweetalert2';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const Report_issue = () => {
+     const axiosSecure = useAxiosSecure();
+      const navigate = useNavigate();
     const IssueName = useLoaderData()
     const title = IssueName.map(c => c.name);
 
@@ -26,11 +30,22 @@ const Report_issue = () => {
                 const IssueInfo = {
                     photoURL: photoURL,
                     title: data.title,
-                    catagory:data.catagory,
-                    location:data.location,
-                    description:data.description
+                    catagory: data.catagory,
+                    location: data.location,
+                    description: data.description
                 }
                 console.log(IssueInfo)
+                axiosSecure.post('/issues', IssueInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            Swal.fire({
+                                title: "Issue Submission done.",
+                                icon: "success",
+                                draggable: false
+                            });
+                        }
+                        navigate('/dashboard/my-issue')
+                    })
 
             })
 
@@ -45,108 +60,114 @@ const Report_issue = () => {
         return catagory ? catagory.items : [];
     }
 
-   
+
     return (
-    <div className="max-w-3xl mx-auto bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-md">
-
-        {/* Title */}
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-8 md:mb-10">
-            Create Your Issue
-        </h2>
-
-        <form onSubmit={handleSubmit(handleIssues)} className="space-y-6 md:space-y-8">
-
-            {/* Photo Upload */}
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text font-semibold">Upload Photo</span>
-                </label>
-                <input
-                    type="file"
-                    {...register('photo', { required: true })}
-                    className="file-input file-input-bordered w-full"
-                />
-                {errors.photo && (
-                    <p className="text-red-500 text-sm mt-1">Photo is required</p>
-                )}
-            </div>
+        <div className="max-w-3xl mx-auto bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-md">
 
             {/* Title */}
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text font-semibold">Issue Title</span>
-                </label>
-                <select
-                    {...register('title')}
-                    className="select select-bordered w-full"
-                    defaultValue=""
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-8 md:mb-10">
+                Create Your Issue
+            </h2>
+
+            <form onSubmit={handleSubmit(handleIssues)} className="space-y-6 md:space-y-8">
+
+                {/* Photo Upload */}
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text font-semibold">Upload Photo</span>
+                    </label>
+                    <input
+                        type="file"
+                        {...register('photo', { required: true })}
+                        className="file-input file-input-bordered w-full"
+                    />
+                    {errors.photo && (
+                        <p className="text-red-500 text-sm mt-1">Photo is required</p>
+                    )}
+                </div>
+
+                {/* Title */}
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text font-semibold">Issue Title</span>
+                    </label>
+                    <select
+                        {...register('title', { required: true })}
+                        className="select select-bordered w-full"
+                        defaultValue=""
+                    >
+                        <option disabled value="">Pick your title</option>
+                        {title.map((r, i) => (
+                            <option key={i} value={r}>{r}</option>
+                        ))}
+                    </select>
+                    {errors.title && (
+                        <p className="text-red-500 text-sm mt-1">title selection is required</p>
+                    )}
+                </div>
+
+                {/* Category */}
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text font-semibold">Issue Category</span>
+                    </label>
+                    <select
+                        {...register('catagory', { required: true })}
+                        className="select select-bordered w-full"
+                        defaultValue=""
+                    >
+                        <option disabled value="">Pick a category</option>
+                        {Selectcatagory(titleCatagory).map((r, i) => (
+                            <option key={i} value={r}>{r}</option>
+                        ))}
+                    </select>
+                    {errors.catagory && (
+                        <p className="text-red-500 text-sm mt-1">catagory selection is required</p>
+                    )}
+                </div>
+
+                {/* Location */}
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text font-semibold">Location</span>
+                    </label>
+                    <input
+                        type="text"
+                        {...register('location', { required: true })}
+                        placeholder="Enter issue location"
+                        className="input input-bordered w-full"
+                    />
+                    {errors.location && (
+                        <p className="text-red-500 text-sm mt-1">Location is required</p>
+                    )}
+                </div>
+
+                {/* Description */}
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text font-semibold">Description</span>
+                    </label>
+                    <textarea
+                        {...register('description', { required: true })}
+                        placeholder="Write something about your issue"
+                        className="textarea textarea-bordered w-full min-h-28"
+                    ></textarea>
+                    {errors.description && (
+                        <p className="text-red-500 text-sm mt-1">Description is required</p>
+                    )}
+                </div>
+
+                {/* Submit Button */}
+                <button
+                    type="submit"
+                    className="btn btn-primary w-full text-lg py-2 md:py-3"
                 >
-                    <option disabled value="">Pick your title</option>
-                    {title.map((r, i) => (
-                        <option key={i} value={r}>{r}</option>
-                    ))}
-                </select>
-            </div>
+                    Submit Issue
+                </button>
 
-            {/* Category */}
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text font-semibold">Issue Category</span>
-                </label>
-                <select
-                    {...register('catagory')}
-                    className="select select-bordered w-full"
-                    defaultValue=""
-                >
-                    <option disabled value="">Pick a category</option>
-                    {Selectcatagory(titleCatagory).map((r, i) => (
-                        <option key={i} value={r}>{r}</option>
-                    ))}
-                </select>
-            </div>
-
-            {/* Location */}
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text font-semibold">Location</span>
-                </label>
-                <input
-                    type="text"
-                    {...register('location', { required: true })}
-                    placeholder="Enter issue location"
-                    className="input input-bordered w-full"
-                />
-                {errors.location && (
-                    <p className="text-red-500 text-sm mt-1">Location is required</p>
-                )}
-            </div>
-
-            {/* Description */}
-            <div className="form-control">
-                <label className="label">
-                    <span className="label-text font-semibold">Description</span>
-                </label>
-                <textarea
-                    {...register('description', { required: true })}
-                    placeholder="Write something about your issue"
-                    className="textarea textarea-bordered w-full min-h-28"
-                ></textarea>
-                {errors.description && (
-                    <p className="text-red-500 text-sm mt-1">Description is required</p>
-                )}
-            </div>
-
-            {/* Submit Button */}
-            <button
-                type="submit"
-                className="btn btn-primary w-full text-lg py-2 md:py-3"
-            >
-                Submit Issue
-            </button>
-
-        </form>
-    </div>
-);
+            </form>
+        </div>
+    );
 
 };
 
