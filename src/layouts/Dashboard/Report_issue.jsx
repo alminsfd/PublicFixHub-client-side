@@ -1,13 +1,28 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, useWatch } from "react-hook-form"
 import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAuth from '../../hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
+import useRole from '../../hooks/useRole';
+import Loading from '../../components/Loading/Loading';
 
 const Report_issue = () => {
-     const axiosSecure = useAxiosSecure();
-      const navigate = useNavigate();
+    const { user } = useAuth()
+    const { role } = useRole()
+    const [Load, setLoad] = useState(false)
+    const axiosSecure = useAxiosSecure();
+    const { data: Creator = [] } = useQuery({
+        queryKey: ['owner-self', user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users/${user.email}/id`);
+            return res.data;
+        }
+    })
+    console.log(Creator)
+    const navigate = useNavigate();
     const IssueName = useLoaderData()
     const title = IssueName.map(c => c.name);
 
@@ -19,6 +34,7 @@ const Report_issue = () => {
     } = useForm()
 
     const handleIssues = (data) => {
+        setLoad(true)
         console.log(data);
         const profileImg = data.photo[0];
         const formData = new FormData();
@@ -32,7 +48,10 @@ const Report_issue = () => {
                     title: data.title,
                     catagory: data.catagory,
                     location: data.location,
-                    description: data.description
+                    description: data.description,
+                    createdBy: Creator.id,
+                    role: role,
+                    name: Creator.name
                 }
                 console.log(IssueInfo)
                 axiosSecure.post('/issues', IssueInfo)
@@ -44,6 +63,7 @@ const Report_issue = () => {
                                 draggable: false
                             });
                         }
+                        setLoad(false)
                         navigate('/dashboard/my-issue')
                     })
 
@@ -60,7 +80,9 @@ const Report_issue = () => {
         return catagory ? catagory.items : [];
     }
 
-
+    if (Load) {
+        return <Loading />;
+    }
     return (
         <div className="max-w-3xl mx-auto bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-md">
 
