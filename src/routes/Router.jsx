@@ -15,6 +15,7 @@ import PrivateRoute from "./PrivateRoute";
 import Report_issue from "../layouts/Dashboard/Report_issue";
 import MyIssuePage from "../layouts/Dashboard/MyIssuePage";
 import Profile from "../layouts/Dashboard/Profile";
+import UserRoute from "./UserRoute";
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -40,7 +41,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/issueDetails/:id',
-                element: <PrivateRoute><IssueDetails></IssueDetails></PrivateRoute> 
+                element: <PrivateRoute><IssueDetails></IssueDetails></PrivateRoute>
             }
         ],
 
@@ -70,16 +71,16 @@ export const router = createBrowserRouter([
                 Component: DashboardHome
             },
             {
-                path:'/dashboard/report-issue',
-                element:<PrivateRoute> <Report_issue></Report_issue> </PrivateRoute>
+                path: '/dashboard/report-issue',
+                element: <PrivateRoute><UserRoute><Report_issue></Report_issue></UserRoute>  </PrivateRoute>
             },
             {
-                path:'/dashboard/my-issue',
-                element:<PrivateRoute><MyIssuePage></MyIssuePage></PrivateRoute>
+                path: '/dashboard/my-issue',
+                element: <PrivateRoute><UserRoute><MyIssuePage></MyIssuePage></UserRoute></PrivateRoute>
             },
             {
-                path:'/dashboard/my-profile',
-                element:<PrivateRoute><Profile></Profile></PrivateRoute>
+                path: '/dashboard/my-profile',
+                element: <PrivateRoute><UserRoute> <Profile></Profile></UserRoute> </PrivateRoute>
             }
             // Staff only routes
 
