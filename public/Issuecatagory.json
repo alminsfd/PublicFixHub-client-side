@@ -1,0 +1,85 @@
+[
+  {
+    "id": 1,
+    "name": "Road & Transport",
+    "items": [
+      "Potholes",
+      "Broken Roads",
+      "Damaged Footpaths",
+      "Blocked Drains on Road",
+      "Damaged Speed Breaker",
+      "Missing Road Sign"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Streetlight & Electricity",
+    "items": [
+      "Broken Streetlight",
+      "Flickering Streetlight",
+      "Exposed Electrical Wires",
+      "Transformer Issue",
+      "Power Outage"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Water Supply",
+    "items": [
+      "Water Leakage",
+      "Low Water Pressure",
+      "Contaminated Water",
+      "Water Pipe Burst"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Garbage & Sanitation",
+    "items": [
+      "Garbage Overflow",
+      "Missed Garbage Pickup",
+      "Blocked Drainage",
+      "Mosquito Breeding Area"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Public Property Damage",
+    "items": [
+      "Damaged Park Equipment",
+      "Broken Benches",
+      "Vandalized Public Walls",
+      "Damaged Bus Stop Shelter"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Environment",
+    "items": [
+      "Tree Blocking Road",
+      "Fallen Tree Branch",
+      "Air Pollution",
+      "Illegal Burning"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Sewage & Drainage",
+    "items": [
+      "Sewage Leak",
+      "Manhole Cover Missing",
+      "Clogged Drain",
+      "Overflowing Sewer Line"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Public Safety",
+    "items": [
+      "Accident Hazard Area",
+      "Open Manhole",
+      "Non-functional CCTV",
+      "Dangerous Construction Area"
+    ]
+  }
+]

@@ -31,7 +31,6 @@ const Register = () => {
                 axios.post(image_API_URL, formData)
                     .then(res => {
                         const photoURL = res.data.data.url;
-
                         // create user in the database
                         const userInfo = {
                             email: data.email,

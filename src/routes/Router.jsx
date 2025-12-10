@@ -72,7 +72,8 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/report-issue',
-                element: <PrivateRoute><UserRoute><Report_issue></Report_issue></UserRoute>  </PrivateRoute>
+                element: <PrivateRoute><UserRoute><Report_issue></Report_issue></UserRoute>  </PrivateRoute>,
+                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json())
             },
             {
                 path: '/dashboard/my-issue',
@@ -80,7 +81,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/my-profile',
-                element: <PrivateRoute><UserRoute> <Profile></Profile></UserRoute> </PrivateRoute>
+                element: <PrivateRoute><UserRoute><Profile></Profile></UserRoute> </PrivateRoute>
             }
             // Staff only routes
 

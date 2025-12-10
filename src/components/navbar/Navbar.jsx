@@ -3,10 +3,12 @@ import Logo from './LOGO';
 import { Link, NavLink, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import useRole from '../../hooks/useRole';
 
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
+    const { role } = useRole()
     const navigate = useNavigate()
 
     const handleLogOut = () => {
@@ -36,7 +38,7 @@ const Navbar = () => {
         <li><NavLink className='text-base' to="/be_a_staff">Be a Staff</NavLink></li>
         <li><NavLink className='text-base' to="/coverage">Coverage Areas</NavLink></li>
         {
-            user && <>
+            role === 'citizen' && <>
                 <li><NavLink to="/dashboard/my-issue">My Issue</NavLink></li>
                 <li><NavLink to="/dashboard/my-profile"> Profile </NavLink></li>
                 <li><NavLink to="/dashboard/report-issue"> Report Issue </NavLink></li>
