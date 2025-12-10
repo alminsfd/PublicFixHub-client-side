@@ -58,7 +58,6 @@ const Register = () => {
 
                         updateUserProfile(userProfile)
                             .then(() => {
-                                // console.log('user profile updated done.')
                                 navigate(location.state || '/');
                             })
                             .catch(error => {
@@ -72,6 +71,15 @@ const Register = () => {
                             })
                     })
 
+            })
+            .catch(error => {
+                const errorMessage = error.message;
+                Swal.fire({
+                    icon: "error",
+                    text: errorMessage,
+                    title: "Something went wrong!",
+
+                });
             })
 
 

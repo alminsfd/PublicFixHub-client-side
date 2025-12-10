@@ -77,7 +77,7 @@ const Navbar = () => {
 
                             <div className="dropdown dropdown-end cursor-pointer  ">
                                 <div tabIndex={0} role="button" className="m-1">
-                                    <img className='w-12 h-12 rounded-full' src={user?.photoURL} alt="" />
+                                    <img className='w-12 h-12 rounded-full' src={user?.photoURL} referrerPolicy="no-referrer" alt="" />
                                 </div>
                                 <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                                     <li className='hover:bg-gray-300 hover:text-indigo-500' >
