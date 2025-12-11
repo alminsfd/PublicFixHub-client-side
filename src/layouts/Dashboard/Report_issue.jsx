@@ -14,14 +14,23 @@ const Report_issue = () => {
     const { role } = useRole()
     const [Load, setLoad] = useState(false)
     const axiosSecure = useAxiosSecure();
-    const { data: Creator = [] } = useQuery({
+    const { data: Creator = {} } = useQuery({
         queryKey: ['owner-self', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/users/${user.email}/id`);
             return res.data;
         }
     })
-    console.log(Creator)
+
+    const { data: IssueCount = 0 } = useQuery({
+        queryKey: ["issue-count", Creator?.id],
+        enabled: !!Creator?.id,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/issues/count/${Creator.id}`);
+            return res.data.count;
+        }
+    });
+
     const navigate = useNavigate();
     const IssueName = useLoaderData()
     const title = IssueName.map(c => c.name);
@@ -35,7 +44,6 @@ const Report_issue = () => {
 
     const handleIssues = (data) => {
         setLoad(true)
-        console.log(data);
         const profileImg = data.photo[0];
         const formData = new FormData();
         formData.append('image', profileImg);
@@ -53,7 +61,6 @@ const Report_issue = () => {
                     role: role,
                     name: Creator.name
                 }
-                console.log(IssueInfo)
                 axiosSecure.post('/issues', IssueInfo)
                     .then(res => {
                         if (res.data.insertedId) {
@@ -83,6 +90,24 @@ const Report_issue = () => {
     if (Load) {
         return <Loading />;
     }
+    if (!Creator?.isPremium && IssueCount >= 3) {
+        return (
+            <div className="max-w-xl mx-auto text-center border border-[#ece7e7] bg-white p-6 rounded-xl mt-20 shadow">
+                <h2 className="text-xl md:text-2xl font-bold mb-4">Issue Limit Reached</h2>
+                <p className=" text-sm md:text-base text-gray-600 mb-6">
+                    Free users can report only <strong>3 issues</strong>.
+                </p>
+
+                <button
+                    onClick={() => navigate("/dashboard/my-profile")}
+                    className="btn btn-primary"
+                >
+                    Upgrade to Premium
+                </button>
+            </div>
+        );
+    }
+
     return (
         <div className="max-w-3xl mx-auto bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-md">
 
