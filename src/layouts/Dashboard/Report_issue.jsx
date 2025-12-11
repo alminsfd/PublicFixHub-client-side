@@ -59,7 +59,8 @@ const Report_issue = () => {
                     description: data.description,
                     createdBy: Creator.id,
                     role: role,
-                    name: Creator.name
+                    name: Creator.name,
+                    createrEmail: Creator.email
                 }
                 axiosSecure.post('/issues', IssueInfo)
                     .then(res => {

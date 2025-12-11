@@ -4,10 +4,10 @@ const IssueCard = ({ issue }) => {
 
 
     const {
-        id,
-        image,
+        _id,
+        photoURL,
         title,
-        category,
+        catagory,
         status,
         priority, 
         location,
@@ -15,22 +15,22 @@ const IssueCard = ({ issue }) => {
     } = issue;
 
     const statusColor = {
-        Pending: "bg-yellow-100 text-yellow-700",
+        pending: "bg-yellow-100 text-yellow-700",
         "In-Progress": "bg-blue-100 text-blue-700",
-        Resolved: "bg-green-100 text-green-700",
-        Closed: "bg-gray-200 text-gray-600",
+        resolved: "bg-green-100 text-green-700",
+        closed: "bg-gray-200 text-gray-600",
     };
 
     const priorityColor = {
         High: "bg-red-100 text-red-700",
-        Normal: "bg-green-100 text-green-700",
+        normal: "bg-green-100 text-green-700",
     };
 
     return (
         <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition ">
             {/* Image */}
             <img
-                src={image}
+                src={photoURL}
                 alt={title}
                 className="w-full h-48 object-cover"
             />
@@ -40,7 +40,7 @@ const IssueCard = ({ issue }) => {
                 <h2 className="text-xl font-semibold">{title}</h2>
 
                 {/* Category */}
-                <p className="text-gray-500 text-sm">Category: {category}</p>
+                <p className="text-gray-500 text-sm">Category: {catagory}</p>
 
                 {/* Badges */}
                 <div className="flex items-center gap-2">
@@ -48,13 +48,13 @@ const IssueCard = ({ issue }) => {
                         {status}
                     </span>
                     <span className={`px-2 py-1 text-xs font-medium rounded-full ${priorityColor[priority]}`}>
-                        {priority} Priority
+                        {priority} priority
                     </span>
                 </div>
 
                 {/* Location */}
                 <p className="text-sm text-gray-600">
-                    {location}
+                   location: {location}
                 </p>
 
                 {/* Footer */}
@@ -69,7 +69,7 @@ const IssueCard = ({ issue }) => {
                     {/* View Details */}
                 </div>
                 <Link
-                    to={`/issueDetails/${id}`}
+                    to={`/issueDetails/${_id}`}
                     className=" btn button px-3 py-2 w-full "
                 >
                     View Details

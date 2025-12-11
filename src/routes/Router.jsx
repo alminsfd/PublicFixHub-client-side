@@ -77,7 +77,8 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/my-issue',
-                element: <PrivateRoute><UserRoute><MyIssuePage></MyIssuePage></UserRoute></PrivateRoute>
+                element: <PrivateRoute><UserRoute><MyIssuePage></MyIssuePage></UserRoute></PrivateRoute>,
+                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json())
             },
             {
                 path: '/dashboard/my-profile',
