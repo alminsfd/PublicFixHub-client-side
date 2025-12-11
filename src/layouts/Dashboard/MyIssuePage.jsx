@@ -12,6 +12,8 @@ const MyIssuePage = () => {
     const axiosSecure = useAxiosSecure();
     const [statusFilter, setStatusFilter] = useState("");
     const [categoryFilter, setCategoryFilter] = useState("");
+
+
     const { data: myIssues = [], refetch, isLoading } = useQuery({
         queryKey: ["my-issues", user?.email],
         queryFn: async () => {
@@ -55,7 +57,7 @@ const MyIssuePage = () => {
                     </div>
                 ) : (
 
-                    filteredIssues.map(issue => <IssueCard key={issue._id} issue={issue} ></IssueCard>)
+                    filteredIssues.map(issue => <IssueCard key={issue._id}  refetch={refetch}  issue={issue} ></IssueCard>)
 
                 )}
                 {

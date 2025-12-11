@@ -1,6 +1,29 @@
 import { Link } from "react-router";
 import { MdHowToVote } from "react-icons/md";
-const IssueCard = ({ issue }) => {
+import { useState } from "react";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+const IssueCard = ({ refetch, issue }) => {
+    const axiosSecure = useAxiosSecure();
+    // const [selectedIssue, setSelectedIssue] = useState(null);
+    // const openEditModal = (issue) => setSelectedIssue(issue);
+    // const closeEditModal = () => setSelectedIssue(null);
+
+    const handleDelete = async (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.delete(`/issues/${id}`);
+                if (res.data.deletedCount) {
+                    Swal.fire("Deleted!", "Your issue has been removed.", "success");
+                    refetch();   
+                }
+            }
+        });
+    };
 
 
     const {
@@ -9,9 +32,8 @@ const IssueCard = ({ issue }) => {
         title,
         catagory,
         status,
-        priority, 
+        priority,
         location,
-        upvotes,
     } = issue;
 
     const statusColor = {
@@ -54,17 +76,13 @@ const IssueCard = ({ issue }) => {
 
                 {/* Location */}
                 <p className="text-sm text-gray-600">
-                   location: {location}
+                    location: {location}
                 </p>
 
                 {/* Footer */}
                 <div className="flex items-center justify-between pt-3">
-                    {/* Upvote Button */}
-                    <p className="flex items-center gap-1 px-3 py-1 rounded-lg border hover:bg-gray-100 transition">
-                        <span>{upvotes}</span>
-                    </p>
-
-                    <button className="btn button " ><MdHowToVote/>upvote</button>
+                    {/* <button onClick={() => openEditModal(issue)} className="btn button " >Edit</button> */}
+                    <button onClick={() => handleDelete(_id)} className="btn button " >Delete</button>
 
                     {/* View Details */}
                 </div>
