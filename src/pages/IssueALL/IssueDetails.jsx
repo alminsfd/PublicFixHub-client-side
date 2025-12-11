@@ -16,7 +16,7 @@ const IssueDetails = () => {
             return res.data;
         }
     });
-    console.log(myIssuesDetails);
+ 
 
 
     return (

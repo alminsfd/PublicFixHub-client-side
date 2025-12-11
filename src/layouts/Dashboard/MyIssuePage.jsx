@@ -23,7 +23,6 @@ const MyIssuePage = () => {
         (statusFilter ? issue.status === statusFilter : true) &&
         (categoryFilter ? issue.catagory === categoryFilter : true)
     );
-    console.log(filteredIssues)
     return (
         <>
             <div className="flex justify-center gap-4 my-4">
@@ -33,12 +32,12 @@ const MyIssuePage = () => {
                     <option value="pending">Pending</option>
                     <option value="in-progress">In-Progress</option>
                     <option value="resolved">Resolved</option>
-                    <option value="close">Closed</option>
+                    <option value="closed">Closed</option>
                 </select>
 
                 <select className="select select-bordered"
                     onChange={(e) => setCategoryFilter(e.target.value)}>
-                    <option value="">All Issues</option>
+                    <option value="">All Catagory</option>
                     {categoryData.map((cat) =>
                         cat.items.map((item, i) => (
                             <option key={cat.id + "-" + i} value={item}>
@@ -50,9 +49,18 @@ const MyIssuePage = () => {
             </div>
 
             <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+                {filteredIssues.length === 0 ? (
+                    <div className="text-center  md:text-4xl col-span-full text-gray-500 py-10">
+                        ❌ No issues found
+                    </div>
+                ) : (
+
+                    filteredIssues.map(issue => <IssueCard key={issue._id} issue={issue} ></IssueCard>)
+
+                )}
                 {
 
-                    myIssues.map(issue => <IssueCard key={issue._id} issue={issue} ></IssueCard>)
+
                 }
 
             </div>

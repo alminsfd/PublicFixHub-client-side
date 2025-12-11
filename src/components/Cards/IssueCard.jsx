@@ -16,7 +16,7 @@ const IssueCard = ({ issue }) => {
 
     const statusColor = {
         pending: "bg-yellow-100 text-yellow-700",
-        "In-Progress": "bg-blue-100 text-blue-700",
+        "in-progress": "bg-blue-100 text-blue-700",
         resolved: "bg-green-100 text-green-700",
         closed: "bg-gray-200 text-gray-600",
     };
