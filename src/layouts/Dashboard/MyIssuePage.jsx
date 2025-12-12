@@ -14,7 +14,7 @@ const MyIssuePage = () => {
     const [categoryFilter, setCategoryFilter] = useState("");
 
 
-    const { data: myIssues = [], refetch, isLoading } = useQuery({
+    const { data: myIssues = [], refetch } = useQuery({
         queryKey: ["my-issues", user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/issues?email=${user?.email}`);
