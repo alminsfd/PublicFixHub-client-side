@@ -4,15 +4,24 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useRef } from "react";
-import { useForm } from "react-hook-form";
-const IssueCard = ({ refetch, issue }) => {
+import { useForm,  } from "react-hook-form";
+const IssueCard = ({ refetch, issue, categoryData }) => {
     const axiosSecure = useAxiosSecure();
     const editModalRef = useRef();
     const [selectedIssue, setSelectedIssue] = useState({});
     const {
         register,
         handleSubmit,
-    } = useForm()
+    } = useForm({
+        defaultValues: {
+            catagory: issue.catagory,
+            description: issue.description,
+            location: issue.location,
+            photoURL: issue.photoURL,
+            title: issue.title
+        }
+    })
+
     const handleDelete = async (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -30,6 +39,7 @@ const IssueCard = ({ refetch, issue }) => {
     };
 
     const onSubmitUpdate = async (data) => {
+        console.log(data)
         editModalRef.current.close()
         const res = await axiosSecure.patch(`/issues/${selectedIssue._id}`, data);
         if (res.data.modifiedCount > 0) {
@@ -40,8 +50,13 @@ const IssueCard = ({ refetch, issue }) => {
 
 
     const openEditModal = (issue) => {
-        setSelectedIssue(issue);
-        editModalRef.current.showModal()
+        if (issue.status === "pending") {
+            setSelectedIssue(issue);
+            editModalRef.current.showModal()
+        }
+        else {
+            Swal.fire("Only pending issues updating allow");
+        }
     }
 
 
@@ -88,18 +103,16 @@ const IssueCard = ({ refetch, issue }) => {
                             {issue.priority} priority
                         </span>
                     </div>
-                    {
-                        console.log(issue)
-                    }
                     {/* Location */}
                     <p className="text-sm text-gray-600">
                         <span className="font-bold" >location: </span>{issue.location}
                     </p>
-                    <p className="text-sm text-gray-600  leading-relaxed ">
-                        <span className="font-bold" > description: </span> {issue.description.split(' ').slice(0, 25).join(' ')}
-                        {issue.description.split(' ').length > 25 && '...'}
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                        {issue.description
+                            ? issue.description.split(' ').slice(0, 25).join(' ') +
+                            (issue.description.split(' ').length > 25 ? '...' : '')
+                            : 'No description available'}
                     </p>
-
 
                     {/* Footer */}
                     <div className="flex items-center justify-between pt-3">
@@ -121,45 +134,99 @@ const IssueCard = ({ refetch, issue }) => {
             <dialog ref={editModalRef} className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
                     <h3 className="text-xl font-bold mb-4">Edit Issue</h3>
-                    <form onSubmit={handleSubmit(onSubmitUpdate)}>
-                        <input
-                            defaultValue={selectedIssue.photoURL}
-                            {...register("photoURL")}
-                            className="input input-bordered w-full mb-3"
-                        />
-                        <input
-                            defaultValue={selectedIssue.title}
-                            {...register("title")}
-                            className="input input-bordered w-full mb-3"
-                        />
+                    <form onSubmit={handleSubmit(onSubmitUpdate)} className="space-y-4">
+                        {/* Photo URL */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Photo URL
+                            </label>
+                            <input
+                                defaultValue={selectedIssue.photoURL}
+                                {...register("photoURL")}
+                                className="input input-bordered w-full"
+                                placeholder="Enter photo URL"
+                            />
+                        </div>
 
-                        <input
-                            defaultValue={selectedIssue.catagory}
-                            {...register("catagory")}
-                            className="input input-bordered w-full mb-3"
-                        />
-                        <input
-                            defaultValue={selectedIssue.location}
-                            {...register("location")}
-                            className="input input-bordered w-full mb-3"
-                        />
-                        <textarea
-                            defaultValue={selectedIssue.description}
-                            {...register("description")}
-                            className="textarea textarea-bordered w-full"
-                        />
+                        {/* Title */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Title
+                            </label>
+
+                            <select  {...register("title")} className="select select-bordered"
+                                onChange={(e) => categoryData(e.target.value)}>
+                                <option value="">All Catagory</option>
+                                {categoryData.map((cat) =>
+                                    <option key={cat.id} value={cat.name}>
+                                        {cat.name}
+                                    </option>
+                                )}
+                            </select>
 
 
+                        </div>
+
+                        {/* Category */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Category
+                            </label>
+                            <select {...register("catagory")}  className="select select-bordered"
+                                onChange={(e) => categoryData(e.target.value)}>
+                                <option value="">All Catagory</option>
+                                {categoryData.map((cat) =>
+                                    cat.items.map((item, i) => (
+                                        <option key={cat.id + "-" + i} value={item}>
+                                            {item}
+                                        </option>
+                                    ))
+                                )}
+                            </select>
+                        </div>
+
+                        {/* Location */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Location
+                            </label>
+                            <input
+                                defaultValue={selectedIssue.location}
+                                {...register("location")}
+                                className="input input-bordered w-full"
+                                placeholder="Enter location"
+                            />
+                        </div>
+
+                        {/* Description */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Description
+                            </label>
+                            <textarea
+                                defaultValue={selectedIssue.description}
+                                {...register("description")}
+                                className="textarea textarea-bordered w-full"
+                                placeholder="Enter detailed description"
+                                rows={4}
+                            />
+                        </div>
+
+                        {/* Buttons */}
                         <div className="mt-4 flex justify-end gap-3">
-                            <button type="button" className="btn" onClick={() => editModalRef.current.close()}>
+                            <button
+                                type="button"
+                                className="btn btn-outline"
+                                onClick={() => editModalRef.current.close()}
+                            >
                                 Cancel
                             </button>
-                            <button className="btn btn-primary" type="submit">
+                            <button type="submit" className="btn btn-primary">
                                 Update
                             </button>
                         </div>
-
                     </form>
+
                 </div>
             </dialog>
 

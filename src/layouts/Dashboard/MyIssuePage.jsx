@@ -57,7 +57,7 @@ const MyIssuePage = () => {
                     </div>
                 ) : (
 
-                    filteredIssues.map(issue => <IssueCard key={issue._id}  refetch={refetch}  issue={issue} ></IssueCard>)
+                        filteredIssues.map(issue => <IssueCard key={issue._id} categoryData={categoryData}  refetch={refetch}  issue={issue} ></IssueCard>)
 
                 )}
                 {
