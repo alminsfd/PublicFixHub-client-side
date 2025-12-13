@@ -6,7 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 
 const Login = () => {
-    const { signInUser } = useAuth()
+    const { signInUser, setUser } = useAuth()
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -22,6 +22,7 @@ const Login = () => {
         signInUser(data.email, data.password)
             .then(result => {
                 console.log(result.user)
+                setUser(result?.user)
                 navigate(location?.state || '/')
                 Swal.fire({
                     title: "Successfully login done.",

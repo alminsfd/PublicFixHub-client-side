@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 
 
 const SocialLogin = () => {
-    const { signInGoogle } = useAuth();
+    const { signInGoogle, setUser } = useAuth();
     const axiosSecure = useAxiosSecure();
     const location = useLocation();
     const navigate = useNavigate();
@@ -18,6 +18,7 @@ const SocialLogin = () => {
         signInGoogle()
             .then(result => {
                 console.log(result.user);
+                setUser(result?.user)
 
 
                 // create user in the database

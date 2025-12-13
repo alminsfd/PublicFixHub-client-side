@@ -26,16 +26,14 @@ const Profile = () => {
         register,
         handleSubmit,
         reset
-    } = useForm({
-
-    })
+    } = useForm({})
     useEffect(() => {
         reset({
             photoURL: myProfie[0]?.photoURL,
             displayName: myProfie[0]?.displayName,
             email: myProfie[0]?.email
         })
-    }, [myProfie])
+    }, [myProfie,reset])
     if (isLoading) {
         return <Loading></Loading>
     }

@@ -6,7 +6,6 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useRef } from "react";
 import { useForm, useWatch, } from "react-hook-form";
 const IssueCard = ({ refetch, issue, categoryData }) => {
-    console.log(categoryData)
     const axiosSecure = useAxiosSecure();
     const editModalRef = useRef();
     const [selectedIssue, setSelectedIssue] = useState({});
@@ -24,6 +23,7 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
             title: issue.title
         }
     })
+
 
     const handleDelete = async (id) => {
         Swal.fire({
@@ -62,7 +62,7 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
     }
 
     const title = categoryData.map(c => c.name);
-     const titleCatagory = useWatch({ control, name: 'title' });
+    const titleCatagory = useWatch({ control, name: 'title' });
     const Selectcatagory = (catagoryname) => {
         const catagory = categoryData.find(c => c.name === catagoryname);
         return catagory ? catagory.items : [];
@@ -148,31 +148,14 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
                                 Photo URL
                             </label>
                             <input
-                                defaultValue={selectedIssue.photoURL}
+
                                 {...register("photoURL")}
                                 className="input input-bordered w-full"
                                 placeholder="Enter photo URL"
                             />
                         </div>
 
-                        {/* Title */}
-                        {/* <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Title
-                            </label>
-
-                            <select  {...register("title")} className="select select-bordered"
-                                onChange={(e) => categoryData(e.target.value)}>
-                                <option value="">All Catagory</option>
-                                {categoryData.map((cat) =>
-                                    <option key={cat.id} value={cat.name}>
-                                        {cat.name}
-                                    </option>
-                                )}
-                            </select>
-
-
-                        </div> */}
+                        {/* title */}
 
                         <div className="form-control">
                             <label className="label">
@@ -181,7 +164,7 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
                             <select
                                 {...register('title', { required: true })}
                                 className="select select-bordered w-full"
-                                defaultValue=""
+
                             >
                                 <option disabled value="">Pick your title</option>
                                 {title.map((r, i) => (
@@ -193,25 +176,7 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
                             )}
                         </div>
 
-                        {/* Category */}
-                        {/* <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Category
-                            </label>
-                            <select {...register("catagory")}  className="select select-bordered"
-                                onChange={(e) => categoryData(e.target.value)}>
-                                <option value="">All Catagory</option>
-                                {categoryData.map((cat) =>
-                                    cat.items.map((item, i) => (
-                                        <option key={cat.id + "-" + i} value={item}>
-                                            {item}
-                                        </option>
-                                    ))
-                                )}
-                            </select>
-                        </div> */}
-
-
+                        {/* catagory */}
 
                         <div className="form-control">
                             <label className="label">
@@ -220,7 +185,7 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
                             <select
                                 {...register('catagory', { required: true })}
                                 className="select select-bordered w-full"
-                                defaultValue=""
+
                             >
                                 <option disabled value="">Pick a category</option>
                                 {Selectcatagory(titleCatagory).map((r, i) => (
@@ -238,7 +203,6 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
                                 Location
                             </label>
                             <input
-                                defaultValue={selectedIssue.location}
                                 {...register("location")}
                                 className="input input-bordered w-full"
                                 placeholder="Enter location"
@@ -251,7 +215,6 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
                                 Description
                             </label>
                             <textarea
-                                defaultValue={selectedIssue.description}
                                 {...register("description")}
                                 className="textarea textarea-bordered w-full"
                                 placeholder="Enter detailed description"

@@ -6,7 +6,7 @@ import { AuthContext } from './AuthContext';
 
 const googleProvider = new GoogleAuthProvider();
 const  AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
 
     const registerUser = (email, password) => {
@@ -43,7 +43,7 @@ const  AuthProvider = ({ children }) => {
         return () => {
             unSubscribe();
         }
-    }, [])
+    }, [user?.email])
 
     const authInfo = {
         user,
@@ -52,7 +52,8 @@ const  AuthProvider = ({ children }) => {
         signInUser,
         signInGoogle,
         logOut,
-        updateUserProfile
+        updateUserProfile,
+        setUser
     }
 
     return (

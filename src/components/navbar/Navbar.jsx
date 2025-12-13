@@ -1,15 +1,27 @@
-import React from 'react';
 import Logo from './LOGO';
 import { Link, NavLink, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import useRole from '../../hooks/useRole';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
     const { role } = useRole()
     const navigate = useNavigate()
+    const axiosSecure = useAxiosSecure();
+    const { data: myUser = [] } = useQuery({
+        queryKey: ["my-data", user?.email],
+        enabled: !!user.email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users?email=${user?.email}`);
+            return res.data;
+        }
+    });
+
+    console.log(user)
 
     const handleLogOut = () => {
         logOut()
@@ -82,9 +94,14 @@ const Navbar = () => {
                                     <img className='w-12 h-12 rounded-full' src={user?.photoURL} referrerPolicy="no-referrer" alt="" />
                                 </div>
                                 <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                    <li className='hover:bg-gray-300 hover:text-indigo-500' >
-                                        <Link to='/dashboard/my-profile' >{user?.displayName}</Link>
-                                    </li>
+                                    {
+                                        myUser.map(user =>
+                                            <li key={user._id} className='hover:bg-gray-300 hover:text-indigo-500' >
+                                                <Link to='/dashboard/my-profile' >{user.displayName}</Link>
+                                            </li>
+                                        )
+                                    }
+
                                     <li className='hover:bg-gray-300 hover:text-indigo-500' >
                                         <Link to='/dashboard' > Dashboard </Link>
                                     </li>
