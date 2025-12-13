@@ -5,13 +5,14 @@ import IssueTimeline from './IssueTimeline';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 const IssueDetails = () => {
     const { id } = useParams()
     const { user } = useAuth()
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
-    const { data: myIssuesDetails = [], } = useQuery({
+    const { data: myIssuesDetails = [],refetch } = useQuery({
         queryKey: ["my-details", id],
         queryFn: async () => {
             const res = await axiosSecure.get(`/issues/${id}`);
@@ -20,7 +21,22 @@ const IssueDetails = () => {
     });
 
 
-    console.log(user)
+    const handleDelete = async (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.delete(`/issues/${id}`);
+                if (res.data.deletedCount) {
+                    Swal.fire("Deleted!", "Your issue has been removed.", "success");
+                    navigate('/dashboard/my-issue')
+                    refetch();
+                }
+            }
+        });
+    };
 
     return (
         <>
@@ -99,7 +115,7 @@ const IssueDetails = () => {
                             {/* Buttons */}
 
                             {
-                                console.log(details.createrEmail)
+                                console.log(details)
                             }
 
 
@@ -115,7 +131,7 @@ const IssueDetails = () => {
                                             </Link>
 
                                             <button
-                                                // onClick={handleDelete}
+                                                onClick={()=>handleDelete(details._id)}
                                                 className="px-6 py-3 rounded-xl border-2 border-red-500 text-red-600 dark:text-red-400 font-semibold hover:bg-red-50 dark:hover:bg-gray-800 transition cursor-pointer "
                                             >
                                                 Delete

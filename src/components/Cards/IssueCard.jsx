@@ -77,7 +77,7 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
     };
 
     const priorityColor = {
-        High: "bg-red-100 text-red-700",
+        high: "bg-red-100 text-red-700",
         normal: "bg-green-100 text-green-700",
     };
 
