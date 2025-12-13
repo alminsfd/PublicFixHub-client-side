@@ -1,5 +1,6 @@
 import React from 'react';
 import Banner from '../../assets/Banner.png';
+import { Link } from 'react-router';
 
 const WhyChooseUs = () => {
   const reasons = [
@@ -35,14 +36,14 @@ const WhyChooseUs = () => {
         {/* LEFT SECTION */}
         <div className="mb-10">
           <h2 className="text-3xl font-bold text-blue-900">Why choose us</h2>
-          <p className="mt-3 text-gray-600 max-w-xl">
+          <p className="mt-3 text-gray-600 max-w-xl mb-5">
             Our system is designed to make public issue reporting simple, fast,
             and completely transparent. Citizens get full control and visibility
             throughout the process.
           </p>
-          <button className="button px-5 py-2 mt-4 ">
+          <Link to='/dashboard/report-issue' className="button px-5 py-2 mt-4 ">
             Start reporting
-          </button>
+          </Link>
         </div>
 
         {/* GRID SECTION */}

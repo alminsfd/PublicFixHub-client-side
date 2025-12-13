@@ -22,19 +22,18 @@ const Profile = () => {
             return res.data
         }
     });
-    console.log(myProfie)
     const {
         register,
         handleSubmit,
         reset
     } = useForm({
-        
+
     })
     useEffect(() => {
         reset({
             photoURL: myProfie[0]?.photoURL,
             displayName: myProfie[0]?.displayName,
-            email: myProfie[0]?.email  
+            email: myProfie[0]?.email
         })
     }, [myProfie])
     if (isLoading) {
@@ -53,6 +52,28 @@ const Profile = () => {
     const openEditModal = (user) => {
         setSelectedIssue(user);
         updateModalRef.current.showModal()
+    }
+    const setShowPayment = (user) => {
+        const paymentInfo = {
+            Name: user.displayName,
+            userId: user._id,
+            email: user.email,
+            price: 1000,
+        }
+        Swal.fire({
+            title: "Are you sure to pay 1000tk?",
+            text: "You pay 1000tk for premium subscribtion!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, pay it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.post('/payment-checkout-session', paymentInfo);
+                window.location.href = res.data.url;
+            }
+        });
     }
     return (
         <>
@@ -85,7 +106,23 @@ const Profile = () => {
                         )}
                         <div className='flex justify-between items-center' >
                             <button onClick={() => openEditModal(user)} className='button w-1/2 mx-1  py-2 px-3' >update  profile</button>
-                            <button className='button w-1/2 py-2 px-3' >ready to suscribe</button>
+
+                            {
+                                user.isPremium ? (
+                                    <button className="btn w-1/2 py-2 px-3" disabled>Premium User</button>
+                                ) : (
+                                    <button
+                                        className="button w-1/2 py-2 px-3"
+                                        onClick={() => setShowPayment(user)}
+                                    >
+                                        Subscribe (1000৳)
+                                    </button>
+                                )
+                            }
+
+
+
+
                         </div>
                     </div>
 
@@ -127,7 +164,7 @@ const Profile = () => {
                             <label className="block text-sm font-medium text-gray-700 mb-1">
                                 email
                             </label>
-                            <input
+                            <input readOnly
                                 {...register("email")}
                                 className="input input-bordered w-full"
                                 placeholder="Enter your email"

@@ -33,10 +33,10 @@ const Navbar = () => {
             })
     }
     const links = <>
-        <li><NavLink className='text-base' to="/">Home</NavLink></li>
-        <li><NavLink className='text-base' to="/issue">All Issues</NavLink></li>
-        <li><NavLink className='text-base' to="/be_a_staff">Be a Staff</NavLink></li>
-        <li><NavLink className='text-base' to="/coverage">Coverage Areas</NavLink></li>
+        <li><NavLink to="/">Home</NavLink></li>
+        <li><NavLink to="/issue">All Issues</NavLink></li>
+        <li><NavLink to="/be_a_staff">Be a Staff</NavLink></li>
+        <li><NavLink to="/coverage">Coverage Areas</NavLink></li>
         {
             role === 'citizen' && <>
                 <li><NavLink to="/dashboard/my-issue">My Issue</NavLink></li>
@@ -83,7 +83,7 @@ const Navbar = () => {
                                 </div>
                                 <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                                     <li className='hover:bg-gray-300 hover:text-indigo-500' >
-                                        <Link>{user?.displayName}</Link>
+                                        <Link to='/dashboard/my-profile' >{user?.displayName}</Link>
                                     </li>
                                     <li className='hover:bg-gray-300 hover:text-indigo-500' >
                                         <Link to='/dashboard' > Dashboard </Link>

@@ -4,14 +4,17 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useRef } from "react";
-import { useForm,  } from "react-hook-form";
+import { useForm, useWatch, } from "react-hook-form";
 const IssueCard = ({ refetch, issue, categoryData }) => {
+    console.log(categoryData)
     const axiosSecure = useAxiosSecure();
     const editModalRef = useRef();
     const [selectedIssue, setSelectedIssue] = useState({});
     const {
         register,
         handleSubmit,
+        formState: { errors },
+        control
     } = useForm({
         defaultValues: {
             catagory: issue.catagory,
@@ -39,7 +42,6 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
     };
 
     const onSubmitUpdate = async (data) => {
-        console.log(data)
         editModalRef.current.close()
         const res = await axiosSecure.patch(`/issues/${selectedIssue._id}`, data);
         if (res.data.modifiedCount > 0) {
@@ -59,7 +61,12 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
         }
     }
 
-
+    const title = categoryData.map(c => c.name);
+     const titleCatagory = useWatch({ control, name: 'title' });
+    const Selectcatagory = (catagoryname) => {
+        const catagory = categoryData.find(c => c.name === catagoryname);
+        return catagory ? catagory.items : [];
+    }
 
 
     const statusColor = {
@@ -149,7 +156,7 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
                         </div>
 
                         {/* Title */}
-                        <div>
+                        {/* <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
                                 Title
                             </label>
@@ -165,10 +172,29 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
                             </select>
 
 
+                        </div> */}
+
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text font-semibold">Title</span>
+                            </label>
+                            <select
+                                {...register('title', { required: true })}
+                                className="select select-bordered w-full"
+                                defaultValue=""
+                            >
+                                <option disabled value="">Pick your title</option>
+                                {title.map((r, i) => (
+                                    <option key={i} value={r}>{r}</option>
+                                ))}
+                            </select>
+                            {errors.title && (
+                                <p className="text-red-500 text-sm mt-1">title selection is required</p>
+                            )}
                         </div>
 
                         {/* Category */}
-                        <div>
+                        {/* <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
                                 Category
                             </label>
@@ -183,6 +209,27 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
                                     ))
                                 )}
                             </select>
+                        </div> */}
+
+
+
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text font-semibold">Issue Category</span>
+                            </label>
+                            <select
+                                {...register('catagory', { required: true })}
+                                className="select select-bordered w-full"
+                                defaultValue=""
+                            >
+                                <option disabled value="">Pick a category</option>
+                                {Selectcatagory(titleCatagory).map((r, i) => (
+                                    <option key={i} value={r}>{r}</option>
+                                ))}
+                            </select>
+                            {errors.catagory && (
+                                <p className="text-red-500 text-sm mt-1">catagory selection is required</p>
+                            )}
                         </div>
 
                         {/* Location */}
