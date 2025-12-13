@@ -4,9 +4,11 @@ import { Link, useNavigate, useParams } from 'react-router';
 import IssueTimeline from './IssueTimeline';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAuth from '../../hooks/useAuth';
 
 const IssueDetails = () => {
     const { id } = useParams()
+    const { user } = useAuth()
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
     const { data: myIssuesDetails = [], } = useQuery({
@@ -16,8 +18,9 @@ const IssueDetails = () => {
             return res.data;
         }
     });
- 
 
+
+    console.log(user)
 
     return (
         <>
@@ -59,13 +62,6 @@ const IssueDetails = () => {
                                     <p className="text-gray-600 dark:text-gray-400">{details.status}</p>
                                 </div>
 
-                                <div className="p-4 rounded-xl bg-sky-50 dark:bg-gray-800 border border-sky-100 dark:border-gray-700">
-                                    <p className="font-semibold text-gray-800 dark:text-gray-200">
-                                        Role
-                                    </p>
-                                    <p className="text-gray-600 dark:text-gray-400">{details.role}</p>
-                                </div>
-
                                 <div className="p-4 rounded-xl bg-cyan-50 dark:bg-gray-800 border border-cyan-100 dark:border-gray-700">
                                     <p className="font-semibold text-gray-800 dark:text-gray-200">
                                         Priority
@@ -74,15 +70,6 @@ const IssueDetails = () => {
                                         {details.priority}
                                     </p>
                                 </div>
-                                <div className="p-4 rounded-xl bg-cyan-50 dark:bg-gray-800 border border-cyan-100 dark:border-gray-700">
-                                    <p className="font-semibold text-gray-800 dark:text-gray-200">
-                                        Upvote number
-                                    </p>
-                                    <p className="text-gray-600 dark:text-gray-400">
-                                        {details.upvotes}
-                                    </p>
-                                </div>
-                                <button className="btn button p-10 " ><MdHowToVote />Give upvote</button>
                                 <div className="p-4  flex-1 rounded-xl bg-sky-50 dark:bg-gray-800 border border-sky-100 dark:border-gray-700">
                                     <p className="font-semibold text-gray-800 dark:text-gray-200">
                                         location
@@ -97,47 +84,82 @@ const IssueDetails = () => {
                                         {details.assignedStaff}
                                     </p>
                                 </div>
+                                <div className="p-4  rounded-xl bg-cyan-50 dark:bg-gray-800 border border-cyan-100 dark:border-gray-700">
+                                    <p className="font-semibold text-gray-800 dark:text-gray-200">
+                                        Upvote number
+                                    </p>
+                                    <p className="text-gray-600 dark:text-gray-400">
+                                        {details.upvotes}
+                                    </p>
+                                </div>
                             </div>
+                            {/* upvote buttons */}
+
 
                             {/* Buttons */}
-                            <div className="flex flex-wrap gap-4 mt-8">
-                                {/* {isCreator ? ( */}
-                                <>
-                                    <Link
-                                        to={`/updatemodel/123`}
-                                        className="px-6 py-3 rounded-xl border-2 border-purple-500 text-purple-600 dark:text-blue-400 font-semibold hover:bg-blue-50 dark:hover:bg-gray-800 transition"
-                                    >
-                                        Edit
-                                    </Link>
 
-                                    <button
-                                        // onClick={handleDelete}
-                                        className="px-6 py-3 rounded-xl border-2 border-red-500 text-red-600 dark:text-red-400 font-semibold hover:bg-red-50 dark:hover:bg-gray-800 transition cursor-pointer "
-                                    >
-                                        Delete
-                                    </button>
-                                </>
-
-                                <button
-                                    // onClick={handlepurchase}
-                                    className=" mx-6 px-10 py-3 rounded-xl bg-linear-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold shadow-md transition cursor-pointer "
-                                >
-                                    Boost issue
-                                </button>
+                            {
+                                console.log(details.createrEmail)
+                            }
 
 
-                                <button
-                                    onClick={() => navigate(-1)}
-                                    className=" text-center w-full px-6 py-3 rounded-xl bg-linear-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold shadow-md transition"
-                                >
-                                    Go Back
-                                </button>
-                            </div>
+                            {
+                                user.email === details.createrEmail ? (
+                                    <div className="flex flex-wrap gap-4 mt-8">
+                                        <>
+                                            <Link
+                                                to={`/updatemodel/123`}
+                                                className="px-6 py-3 rounded-xl border-2 border-purple-500 text-purple-600 dark:text-blue-400 font-semibold hover:bg-blue-50 dark:hover:bg-gray-800 transition"
+                                            >
+                                                Edit
+                                            </Link>
+
+                                            <button
+                                                // onClick={handleDelete}
+                                                className="px-6 py-3 rounded-xl border-2 border-red-500 text-red-600 dark:text-red-400 font-semibold hover:bg-red-50 dark:hover:bg-gray-800 transition cursor-pointer "
+                                            >
+                                                Delete
+                                            </button>
+                                        </>
+
+                                        <button
+                                            // onClick={handlepurchase}
+                                            className=" mx-6 px-10 py-3 rounded-xl bg-linear-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold shadow-md transition cursor-pointer "
+                                        >
+                                            Boost issue
+                                        </button>
+
+
+                                        <button
+                                            onClick={() => navigate(-1)}
+                                            className=" text-center w-full px-6 py-3 rounded-xl bg-linear-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold shadow-md transition"
+                                        >
+                                            Go Back
+                                        </button>
+                                    </div>
+                                ) : (
+
+
+                                    <div className='flex  items-center gap-2' >
+
+                                        <button className=" w-1/2  px-10 flex  gap-1 items-center justify-center  py-3 rounded-xl bg-linear-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold shadow-md transition cursor-pointer"><MdHowToVote /> Give upvote</button>
+
+                                        <button
+                                            onClick={() => navigate(-1)}
+                                            className=" w-1/2 text-center  px-6 py-3 rounded-xl bg-linear-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold shadow-md transition"
+                                        >
+                                            Go Back
+                                        </button>
+
+                                    </div>
+
+                                )
+                            }
 
                             <div className="mt-6 text-sm text-gray-500 dark:text-gray-400">
                                 Created At:{" "}
                                 <span className="font-medium text-gray-700 dark:text-gray-300">
-                                  {details.name}
+                                    {details.name}
                                 </span>
                             </div>
                         </div>
