@@ -57,7 +57,7 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
             editModalRef.current.showModal()
         }
         else {
-            Swal.fire("Only pending issues updating allow");
+            Swal.fire("Only pending issues update allow");
         }
     }
 
