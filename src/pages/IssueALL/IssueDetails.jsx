@@ -116,6 +116,26 @@ const IssueDetails = () => {
         return catagory ? catagory.items : [];
     }
 
+    const handleupvotes = async (details) => {
+        console.log(user)
+        console.log(details)
+        try {
+            const res = await axiosSecure.patch(`/issues/upvote/${details._id}`, {
+                email: user?.email
+            });
+            if (res.data.success) {
+                Swal.fire(res.data.message);
+                refetch();
+            } else {
+                Swal.fire('Already upvoted')
+            }
+
+        } catch (err) {
+            Swal.fire(err.response?.data?.message || "Upvote failed");
+        }
+
+    }
+
     if (isLoading) {
         <Loading></Loading>
     }
@@ -194,7 +214,7 @@ const IssueDetails = () => {
 
 
                             {
-                                user.email === myIssuesDetails.createrEmail ? (
+                                user.email !== myIssuesDetails.createrEmail ? (
                                     <div className="flex flex-wrap gap-4 mt-8">
                                         <>
                                             <button
@@ -232,7 +252,9 @@ const IssueDetails = () => {
 
                                     <div className='flex  items-center gap-2' >
 
-                                        <button className=" w-1/2  px-10 flex  gap-1 items-center justify-center  py-3 rounded-xl bg-linear-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold shadow-md transition cursor-pointer"><MdHowToVote /> Give upvote</button>
+                                        <button
+                                            onClick={() => handleupvotes(myIssuesDetails)}
+                                            className=" w-1/2  px-10 flex  gap-1 items-center justify-center  py-3 rounded-xl bg-linear-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold shadow-md transition cursor-pointer"><MdHowToVote /> Give upvote</button>
 
                                         <button
                                             onClick={() => navigate(-1)}
