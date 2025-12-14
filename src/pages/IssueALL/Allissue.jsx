@@ -6,18 +6,27 @@ import { MdHowToVote } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router';
 import Loading from '../../components/Loading/Loading';
 import Swal from 'sweetalert2';
+import { useState } from 'react';
 
 const Allissue = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+    const [searchText, setSearchText] = useState('')
+    const [status, setStatus] = useState("");
+    const [priority, setPriority] = useState("");
+    const [category, setCategory] = useState("");
+
     const navigate = useNavigate()
     const { data: allIssues = [], isLoading, refetch } = useQuery({
-        queryKey: ["my-issues", user?.email],
+        queryKey: ["my-issues", searchText, user?.email, status, priority, category],
         queryFn: async () => {
-            const res = await axiosSecure.get('/issues');
+            const res = await axiosSecure.get(`/issues?searchText=${searchText}&status=${status}&priority=${priority}&category=${category}`);
             return res.data;
         }
     });
+
+
+
     console.log(allIssues)
 
     const statusColor = {
@@ -71,104 +80,159 @@ const Allissue = () => {
     };
 
 
-    if (isLoading) {
+
+
+
+
+    // filteredIssues.length === 0 ? (
+    //     <div className="text-center  md:text-4xl col-span-full text-gray-500 py-10">
+    //         ❌ No issues found
+    //     </div>
+    // ) 
+
+
+
+
+    if (isLoading && !searchText) {
         return <Loading></Loading>
     }
     return (
 
+        <div className="p-4 md:p-6 max-w-7xl mx-auto">
 
-        <div>
-           
+            {/*  Search Bar */}
+            <div className="flex justify-center mb-6">
+                <label className="input input-bordered flex items-center gap-2 w-full md:w-2/3 lg:w-1/2">
+                    <svg className="h-5 w-5 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2" fill="none" />
+                        <path d="m21 21-4.3-4.3" stroke="currentColor" strokeWidth="2" />
+                    </svg>
+                    <input
+                        type="search"
+                        placeholder="Search issues..."
+                        className="grow"
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                    />
+                </label>
+            </div>
 
-            <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10" >
-                <div className=" col-span-full flex  justify-center items-center ">
-                    <label className="input">
-                        <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <g
-                                strokeLinejoin="round"
-                                strokeLinecap="round"
-                                strokeWidth="2.5"
-                                fill="none"
-                                stroke="currentColor"
-                            >
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <path d="m21 21-4.3-4.3"></path>
-                            </g>
-                        </svg>
-                        <input type="search" required placeholder="Search" />
-                    </label>
+            {/*  Main Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
+                {/*  Filters */}
+                <div className="lg:col-span-1">
+                    <div className="card bg-base-100 shadow-md p-4 space-y-4">
+                        <h3 className="font-semibold text-lg">Filters</h3>
+                        <div className="divider m-0"></div>
+
+                        <select
+                            className="select select-bordered w-full"
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
+                        >
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                            <option value="closed">Closed</option>
+                        </select>
+
+                        <select
+                            className="select select-bordered w-full"
+                            value={priority}
+                            onChange={(e) => setPriority(e.target.value)}
+                        >
+                            <option value="">All Priority</option>
+                            <option value="high">High</option>
+                            <option value="normal">Normal</option>
+                        </select>
+
+                        <select
+                            className="select select-bordered w-full"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                        >
+                            <option value="">All Category</option>
+                            <option value="traffic">Traffic</option>
+                            <option value="road">Road</option>
+                            <option value="electricity">Electricity</option>
+                        </select>
+                    </div>
                 </div>
 
-                {
-                    [...allIssues].sort((a, b) => {
-                        return priorityOrder[a.priority] - priorityOrder[b.priority]
+                {/*  Issue Cards */}
+                <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {
 
-                    }).map(issuelist =>
+                        allIssues.length === 0 ? (<div className="text-center  md:text-4xl max-h-screen col-span-full text-gray-500 flex justify-center items-center md:py-10">
+                            ❌ No issues found</div>) :
+                            [...allIssues]
+                                .sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority])
+                                .map((issuelist) => (
+                                    <div
+                                        key={issuelist._id}
+                                        className="card bg-base-100 shadow-md hover:shadow-xl transition"
+                                    >
+                                        <figure>
+                                            <img
+                                                src={issuelist.photoURL}
+                                                alt={issuelist.title}
+                                                className="h-48 w-full object-cover"
+                                            />
+                                        </figure>
 
-                        <div key={issuelist._id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition ">
-                            {/* Image */}
-                            <img
-                                src={issuelist.photoURL}
-                                alt={issuelist.title}
-                                className="w-full h-48 object-cover"
-                            />
+                                        <div className="card-body p-4 space-y-2">
+                                            <h2 className="card-title text-lg">{issuelist.title}</h2>
 
-                            <div className="p-4 space-y-3">
-                                {/* Title */}
-                                <h2 className="text-xl font-semibold">{issuelist.title}</h2>
+                                            <p className="text-sm text-gray-500">
+                                                <span className="font-semibold">Category:</span> {issuelist.catagory}
+                                            </p>
 
-                                {/* Category */}
-                                <p className="text-gray-500 text-sm"> <span className="font-bold" >Category:</span>  {issuelist.catagory}</p>
+                                            <div className="flex gap-2 flex-wrap">
+                                                <span className={`badge ${statusColor[issuelist.status]}`}>
+                                                    {issuelist.status}
+                                                </span>
+                                                <span className={`badge ${priorityColor[issuelist.priority]}`}>
+                                                    {issuelist.priority}
+                                                </span>
+                                            </div>
 
-                                {/* Badges */}
-                                <div className="flex items-center gap-2">
-                                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusColor[issuelist.status]}`}>
-                                        {issuelist.status}
-                                    </span>
-                                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${priorityColor[issuelist.priority]}`}>
-                                        {issuelist.priority} priority
-                                    </span>
-                                </div>
-                                {/* Location */}
-                                <p className="text-sm text-gray-600">
-                                    <span className="font-bold" >location: </span>{issuelist.location}
-                                </p>
-                                <p className="text-sm wrap-anywhere text-gray-600 leading-relaxed">
-                                    {issuelist.description
-                                        ? issuelist.description.split(' ').slice(0, 25).join(' ') +
-                                        (issuelist.description.split(' ').length > 25 ? '...' : '')
-                                        : 'No description available'}
-                                </p>
+                                            <p className="text-sm text-gray-600">
+                                                <span className="font-semibold">Location:</span> {issuelist.location}
+                                            </p>
 
-                                {/* Footer */}
-                                <div className="flex items-center justify-between pt-3">
+                                            <p className="text-sm text-gray-600 line-clamp-3">
+                                                {issuelist.description || 'No description available'}
+                                            </p>
 
-                                    <div className="p-4 flex w-12 h-12 rounded-full justify-center items-center bg-cyan-50 dark:bg-gray-800 border border-cyan-100 dark:border-gray-700">
-                                        <p className="text-gray-600 text-center  dark:text-gray-400">
-                                            {issuelist.upvotes}
-                                        </p>
+                                            <div className="flex justify-between items-center pt-2">
+                                                <div className="badge badge-outline">
+                                                    👍 {issuelist.upvotes}
+                                                </div>
+
+                                                <button
+                                                    onClick={() => handleupvotes(issuelist)}
+                                                    className="btn btn-sm btn-primary"
+                                                >
+                                                    <MdHowToVote /> Upvote
+                                                </button>
+                                            </div>
+
+                                            <Link
+                                                to={`/issueDetails/${issuelist._id}`}
+                                                className="btn btn-primary btn-outline btn-sm w-full mt-2"
+                                            >
+                                                View Details
+                                            </Link>
+                                        </div>
                                     </div>
-                                    <button
-                                        onClick={() => handleupvotes(issuelist)}
-                                        className="btn button " > <MdHowToVote /> upvote
-                                    </button>
-
-
-                                </div>
-                                <Link
-                                    to={`/issueDetails/${issuelist._id}`}
-                                    className=" btn button px-3 py-2 w-full "
-                                >
-                                    View Details
-                                </Link>
-                            </div>
-                        </div>
-
-                    )
-                }
+                                ))}
+                </div>
             </div>
         </div>
+
+
 
 
 
