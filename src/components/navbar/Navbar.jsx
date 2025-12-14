@@ -14,7 +14,7 @@ const Navbar = () => {
     const axiosSecure = useAxiosSecure();
     const { data: myUser = [] } = useQuery({
         queryKey: ["my-data", user?.email],
-        enabled: !!user.email,
+        enabled: !!user?.email,
         queryFn: async () => {
             const res = await axiosSecure.get(`/users?email=${user?.email}`);
             return res.data;

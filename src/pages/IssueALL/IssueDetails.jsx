@@ -84,6 +84,31 @@ const IssueDetails = () => {
         }
     };
 
+    const handlepurchase = (details) => {
+        console.log(details)
+        const paymentInfo = {
+            Issuetitle: details.title,
+            createrEmail: details.createrEmail,
+            Issueid: details._id,
+            trackingId: details.trackingId,
+            price: 100,
+        }
+        Swal.fire({
+            title: "Are you sure to pay 100tk?",
+            text: "You pay 100tk for Boosting!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, pay it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.post('/payment-checkout-session/boosting', paymentInfo);
+                window.location.href = res.data.url;
+            }
+        });
+    }
+
     const title = categoryData.map(c => c.name);
     const titleCatagory = useWatch({ control, name: 'title' });
     const Selectcatagory = (catagoryname) => {
@@ -188,7 +213,7 @@ const IssueDetails = () => {
                                         </>
 
                                         <button
-                                            // onClick={handlepurchase}
+                                            onClick={() => handlepurchase(myIssuesDetails)}
                                             className=" mx-6 px-10 py-3 rounded-xl bg-linear-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold shadow-md transition cursor-pointer "
                                         >
                                             Boost issue

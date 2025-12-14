@@ -18,6 +18,8 @@ import Profile from "../layouts/Dashboard/Profile";
 import UserRoute from "./UserRoute";
 import PaymentSuccess from "../pages/Payment/PaymentSuccess";
 import PaymentCencel from "../pages/Payment/PaymentCencel";
+import PaymentCencelboost from "../pages/Payment/PaymentCencelboost";
+import PaymentSuccesboosting from "../pages/Payment/PaymentSuccesboosting";
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -92,8 +94,16 @@ export const router = createBrowserRouter([
                 element: <PaymentSuccess></PaymentSuccess>
             },
             {
+                path:'/dashboard/payment-success-boosting',
+                element: <PaymentSuccesboosting></PaymentSuccesboosting>
+            },
+            {
                 path:'/dashboard/payment-cancelled',
                 element:<PaymentCencel></PaymentCencel>
+            },
+            {
+                path:'/dashboard/payment-cancelled-boosting',
+                element:<PaymentCencelboost></PaymentCencelboost>
             }
             // Staff only routes
 
