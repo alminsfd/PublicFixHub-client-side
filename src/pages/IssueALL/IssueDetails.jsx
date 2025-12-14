@@ -85,7 +85,6 @@ const IssueDetails = () => {
     };
 
     const handlepurchase = (details) => {
-        console.log(details)
         const paymentInfo = {
             Issuetitle: details.title,
             createrEmail: details.createrEmail,
@@ -117,21 +116,29 @@ const IssueDetails = () => {
     }
 
     const handleupvotes = async (details) => {
-        console.log(user)
-        console.log(details)
         try {
             const res = await axiosSecure.patch(`/issues/upvote/${details._id}`, {
                 email: user?.email
             });
             if (res.data.success) {
-                Swal.fire(res.data.message);
+                Swal.fire({
+                    icon:'success',
+                    title: res.data.message
+                });
                 refetch();
             } else {
-                Swal.fire('Already upvoted')
-            }
+                Swal.fire({
+                    icon:'warning',
+                    title:'Already upvote'
 
+                })
+            }
+            // err.response?.data?.message || "Upvote failed"
         } catch (err) {
-            Swal.fire(err.response?.data?.message || "Upvote failed");
+            Swal.fire({
+                icon:'warning',
+                title: err.response?.data?.message || "Upvote failed"
+            });
         }
 
     }
@@ -142,7 +149,7 @@ const IssueDetails = () => {
 
     return (
         <>
-            {
+            
                 <div key={myIssuesDetails.createdBy} className="min-h-screen bg-linear-to-b from-sky-50 to-indigo-100 dark:from-gray-900 dark:to-gray-950 flex justify-center items-center py-16 px-4 transition-colors duration-500">
                     <div className="max-w-5xl w-full bg-white dark:bg-gray-900 shadow-2xl rounded-3xl p-8 lg:flex gap-10 border border-gray-200 dark:border-gray-700 transition-all duration-300">
                         {/* Image Section */}
@@ -152,16 +159,14 @@ const IssueDetails = () => {
                                 className="rounded-3xl w-[380px] h-[300px] object-cover shadow-lg border border-gray-300 dark:border-gray-600"
                             />
                         </div>
-
                         {/* Details Section */}
                         <div className="flex-1 space-y-5">
                             <h1 className="text-3xl mt-3 md:text-4xl font-bold text-gray-800 dark:text-gray-100">
                                 {myIssuesDetails.title}
                             </h1>
-                            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                            <p className="text-gray-700 dark:text-gray-300 wrap-anywhere leading-relaxed">
                                 {myIssuesDetails.description}
                             </p>
-
                             {/* Info Cards */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
                                 <div className="p-4 rounded-xl bg-sky-50 dark:bg-gray-800 border border-sky-100 dark:border-gray-700">
@@ -211,10 +216,8 @@ const IssueDetails = () => {
                                     </p>
                                 </div>
                             </div>
-
-
                             {
-                                user.email !== myIssuesDetails.createrEmail ? (
+                                user.email === myIssuesDetails.createrEmail ? (
                                     <div className="flex flex-wrap gap-4 mt-8">
                                         <>
                                             <button
@@ -248,8 +251,6 @@ const IssueDetails = () => {
                                         </button>
                                     </div>
                                 ) : (
-
-
                                     <div className='flex  items-center gap-2' >
 
                                         <button
@@ -267,7 +268,6 @@ const IssueDetails = () => {
 
                                 )
                             }
-
                             <div className="mt-6 text-sm text-gray-500 dark:text-gray-400">
                                 Created At:{" "}
                                 <span className="font-medium text-gray-700 dark:text-gray-300">
@@ -276,9 +276,10 @@ const IssueDetails = () => {
                             </div>
                         </div>
 
+
                     </div>
                 </div>
-            }
+            
 
 
             <dialog ref={editModalRef} className="modal modal-bottom sm:modal-middle">

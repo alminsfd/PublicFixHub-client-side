@@ -2,9 +2,7 @@ import React from 'react';
 
 const IssueList = () => {
   return (
-    <div>
-      
-    </div>
+    <></>
   );
 };
 

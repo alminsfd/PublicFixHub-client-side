@@ -114,7 +114,7 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
                     <p className="text-sm text-gray-600">
                         <span className="font-bold" >location: </span>{issue.location}
                     </p>
-                    <p className="text-sm text-gray-600 leading-relaxed">
+                    <p className="text-sm wrap-anywhere text-gray-600 leading-relaxed">
                         {issue.description
                             ? issue.description.split(' ').slice(0, 25).join(' ') +
                             (issue.description.split(' ').length > 25 ? '...' : '')
@@ -122,9 +122,15 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
                     </p>
 
                     {/* Footer */}
-                    <div className="flex items-center justify-between pt-3">
-                        <button onClick={() => openEditModal(issue)} className="btn button " >Edit</button>
-                        <button onClick={() => handleDelete(issue._id)} className="btn button " >Delete</button>
+                    <div className="flex  items-center justify-evenly pt-3">
+                        <div className="p-2 flex   justify-center items-center bg-cyan-50 dark:bg-gray-800 border border-cyan-100 dark:border-gray-700">
+                            <span className="font-semibold" > Upvote: </span>
+                            <p className="text-gray-600 text-center ml-1 font-bold   ">
+                                   {issue.upvotes}
+                            </p>
+                        </div>
+                        <button onClick={() => openEditModal(issue)} className="btn button w-1/3 " >Edit</button>
+                        <button onClick={() => handleDelete(issue._id)} className="btn button w-1/3 " >Delete</button>
 
                         {/* View Details */}
                     </div>

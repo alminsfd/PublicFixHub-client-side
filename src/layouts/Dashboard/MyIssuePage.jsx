@@ -17,7 +17,7 @@ const MyIssuePage = () => {
     const { data: myIssues = [], refetch } = useQuery({
         queryKey: ["my-issues", user?.email],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/issues?email=${user?.email}`);
+            const res = await axiosSecure.get(`/myissues?email=${user?.email}`);
             return res.data;
         }
     });
