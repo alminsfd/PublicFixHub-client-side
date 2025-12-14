@@ -72,78 +72,102 @@ const Allissue = () => {
 
 
     if (isLoading) {
-       return <Loading></Loading>
+        return <Loading></Loading>
     }
     return (
-        <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10" >
-
-            {
-                [...allIssues].sort((a, b) => {
-                  return   priorityOrder[a.priority] - priorityOrder[b.priority]
-
-                }).map(issuelist =>
-
-                    <div key={issuelist._id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition ">
-                        {/* Image */}
-                        <img
-                            src={issuelist.photoURL}
-                            alt={issuelist.title}
-                            className="w-full h-48 object-cover"
-                        />
-
-                        <div className="p-4 space-y-3">
-                            {/* Title */}
-                            <h2 className="text-xl font-semibold">{issuelist.title}</h2>
-
-                            {/* Category */}
-                            <p className="text-gray-500 text-sm"> <span className="font-bold" >Category:</span>  {issuelist.catagory}</p>
-
-                            {/* Badges */}
-                            <div className="flex items-center gap-2">
-                                <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusColor[issuelist.status]}`}>
-                                    {issuelist.status}
-                                </span>
-                                <span className={`px-2 py-1 text-xs font-medium rounded-full ${priorityColor[issuelist.priority]}`}>
-                                    {issuelist.priority} priority
-                                </span>
-                            </div>
-                            {/* Location */}
-                            <p className="text-sm text-gray-600">
-                                <span className="font-bold" >location: </span>{issuelist.location}
-                            </p>
-                            <p className="text-sm wrap-anywhere text-gray-600 leading-relaxed">
-                                {issuelist.description
-                                    ? issuelist.description.split(' ').slice(0, 25).join(' ') +
-                                    (issuelist.description.split(' ').length > 25 ? '...' : '')
-                                    : 'No description available'}
-                            </p>
-
-                            {/* Footer */}
-                            <div className="flex items-center justify-between pt-3">
-
-                                <div className="p-4 flex w-12 h-12 rounded-full justify-center items-center bg-cyan-50 dark:bg-gray-800 border border-cyan-100 dark:border-gray-700">
-                                    <p className="text-gray-600 text-center  dark:text-gray-400">
-                                        {issuelist.upvotes}
-                                    </p>
-                                </div>
-                                <button
-                                    onClick={() => handleupvotes(issuelist)}
-                                    className="btn button " > <MdHowToVote /> upvote
-                                </button>
 
 
-                            </div>
-                            <Link
-                                to={`/issueDetails/${issuelist._id}`}
-                                className=" btn button px-3 py-2 w-full "
+        <div>
+           
+
+            <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10" >
+                <div className=" col-span-full flex  justify-center items-center ">
+                    <label className="input">
+                        <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g
+                                strokeLinejoin="round"
+                                strokeLinecap="round"
+                                strokeWidth="2.5"
+                                fill="none"
+                                stroke="currentColor"
                             >
-                                View Details
-                            </Link>
-                        </div>
-                    </div>
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </g>
+                        </svg>
+                        <input type="search" required placeholder="Search" />
+                    </label>
 
-                )
-            }
+                </div>
+
+                {
+                    [...allIssues].sort((a, b) => {
+                        return priorityOrder[a.priority] - priorityOrder[b.priority]
+
+                    }).map(issuelist =>
+
+                        <div key={issuelist._id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition ">
+                            {/* Image */}
+                            <img
+                                src={issuelist.photoURL}
+                                alt={issuelist.title}
+                                className="w-full h-48 object-cover"
+                            />
+
+                            <div className="p-4 space-y-3">
+                                {/* Title */}
+                                <h2 className="text-xl font-semibold">{issuelist.title}</h2>
+
+                                {/* Category */}
+                                <p className="text-gray-500 text-sm"> <span className="font-bold" >Category:</span>  {issuelist.catagory}</p>
+
+                                {/* Badges */}
+                                <div className="flex items-center gap-2">
+                                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusColor[issuelist.status]}`}>
+                                        {issuelist.status}
+                                    </span>
+                                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${priorityColor[issuelist.priority]}`}>
+                                        {issuelist.priority} priority
+                                    </span>
+                                </div>
+                                {/* Location */}
+                                <p className="text-sm text-gray-600">
+                                    <span className="font-bold" >location: </span>{issuelist.location}
+                                </p>
+                                <p className="text-sm wrap-anywhere text-gray-600 leading-relaxed">
+                                    {issuelist.description
+                                        ? issuelist.description.split(' ').slice(0, 25).join(' ') +
+                                        (issuelist.description.split(' ').length > 25 ? '...' : '')
+                                        : 'No description available'}
+                                </p>
+
+                                {/* Footer */}
+                                <div className="flex items-center justify-between pt-3">
+
+                                    <div className="p-4 flex w-12 h-12 rounded-full justify-center items-center bg-cyan-50 dark:bg-gray-800 border border-cyan-100 dark:border-gray-700">
+                                        <p className="text-gray-600 text-center  dark:text-gray-400">
+                                            {issuelist.upvotes}
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={() => handleupvotes(issuelist)}
+                                        className="btn button " > <MdHowToVote /> upvote
+                                    </button>
+
+
+                                </div>
+                                <Link
+                                    to={`/issueDetails/${issuelist._id}`}
+                                    className=" btn button px-3 py-2 w-full "
+                                >
+                                    View Details
+                                </Link>
+                            </div>
+                        </div>
+
+                    )
+                }
+            </div>
         </div>
 
 

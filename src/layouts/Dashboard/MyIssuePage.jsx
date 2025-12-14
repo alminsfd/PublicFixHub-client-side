@@ -25,6 +25,12 @@ const MyIssuePage = () => {
         (statusFilter ? issue.status === statusFilter : true) &&
         (categoryFilter ? issue.catagory === categoryFilter : true)
     );
+
+    const priorityOrder = {
+        high: 1,
+        normal: 2
+    };
+
     return (
         <>
             <div className="flex justify-center gap-4 my-4">
@@ -57,13 +63,12 @@ const MyIssuePage = () => {
                     </div>
                 ) : (
 
-                        filteredIssues.map(issue => <IssueCard key={issue._id} categoryData={categoryData}  refetch={refetch}  issue={issue} ></IssueCard>)
+                        [...filteredIssues].sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]).map(issue => <IssueCard key={issue._id} categoryData={categoryData} refetch={refetch} issue={issue} ></IssueCard>)
 
                 )}
-                {
+                 
 
-
-                }
+                
 
             </div>
 
