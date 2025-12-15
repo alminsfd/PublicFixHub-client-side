@@ -57,7 +57,20 @@ const Navbar = () => {
 
             </>
         }
-        {/* <li><NavLink to="">About Us</NavLink></li> */}
+        {
+            role === 'staff' && <>
+                <li><NavLink to="/dashboard/AssingIssue">Assign Issue</NavLink></li>
+                <li><NavLink to="/dashboard/staff-profile"> Profile </NavLink></li>
+            </>
+        }
+        {
+            role === 'admin' && <>
+                <li><NavLink to="/dashboard/admin-profile">Profile</NavLink></li>
+                <li><NavLink to="/dashboard/admin-allIssue"> Managing issue </NavLink></li>
+                <li><NavLink to="/dashboard/manage-user"> Managing user </NavLink></li>
+                <li><NavLink to="/dashboard/manage-staff"> Managing staff </NavLink></li>
+            </>
+        }
 
     </>
     return (

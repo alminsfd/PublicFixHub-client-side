@@ -4,14 +4,14 @@ import Feature from '../../components/Feature/Feature';
 import HowItWorks from '../../components/Workflow/HowItWorks';
 import WhyChooseUs from '../../components/Workflow/WhyChooseUs';
 import StatusFlow from '../../components/Workflow/StatusFlow';
-import IssueList from '../../components/Cards/IssueList';
+import Latestissue from '../IssueALL/Latestissue';
 
 
 const Home = () => {
     return (
         <>
            <Banner></Banner>
-           <IssueList></IssueList>
+           <Latestissue></Latestissue>
            <Feature></Feature>
            <HowItWorks></HowItWorks>
            <WhyChooseUs></WhyChooseUs>

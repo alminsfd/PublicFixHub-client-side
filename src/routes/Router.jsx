@@ -20,6 +20,14 @@ import PaymentSuccess from "../pages/Payment/PaymentSuccess";
 import PaymentCencel from "../pages/Payment/PaymentCencel";
 import PaymentCencelboost from "../pages/Payment/PaymentCencelboost";
 import PaymentSuccesboosting from "../pages/Payment/PaymentSuccesboosting";
+import StaffRoute from "./StaffRoute";
+import AssignIssuepage from "../layouts/Dashboard/AssignIssuepage";
+import StaffProfilepage from "../layouts/Dashboard/StaffProfilepage";
+import AdminRoute from "./AdminRoute";
+import AdminProfile from "../layouts/Dashboard/AdminProfile";
+import AdminAllissues from "../layouts/Dashboard/AdminAllissues";
+import ManageUser from "../layouts/Dashboard/ManageUser";
+import ManageStaff from "../layouts/Dashboard/ManageStaff";
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -43,7 +51,7 @@ export const router = createBrowserRouter([
             {
                 path: '/coverage',
                 Component: Coverage,
-                loader:()=>fetch('../../public/serviceCenters.json').then(res=>res.json())
+                loader: () => fetch('../../public/serviceCenters.json').then(res => res.json())
             },
             {
                 path: '/issueDetails/:id',
@@ -92,33 +100,49 @@ export const router = createBrowserRouter([
                 element: <PrivateRoute><UserRoute><Profile></Profile></UserRoute> </PrivateRoute>
             },
             {
-                path:'/dashboard/payment-success',
+                path: '/dashboard/payment-success',
                 element: <PaymentSuccess></PaymentSuccess>
             },
             {
-                path:'/dashboard/payment-success-boosting',
+                path: '/dashboard/payment-success-boosting',
                 element: <PaymentSuccesboosting></PaymentSuccesboosting>
             },
             {
-                path:'/dashboard/payment-cancelled',
-                element:<PaymentCencel></PaymentCencel>
+                path: '/dashboard/payment-cancelled',
+                element: <PaymentCencel></PaymentCencel>
             },
             {
-                path:'/dashboard/payment-cancelled-boosting',
-                element:<PaymentCencelboost></PaymentCencelboost>
-            }
+                path: '/dashboard/payment-cancelled-boosting',
+                element: <PaymentCencelboost></PaymentCencelboost>
+            },
             // Staff only routes
 
-            //   {
-            //     path: 'completed-deliveries',
-            //     element: <StaffRoute><CompletedDeliveries></CompletedDeliveries></StaffRoute>
-            //   },
+            {
+                path: '/dashboard/AssingIssue',
+                element: <StaffRoute><AssignIssuepage></AssignIssuepage></StaffRoute>
+            },
+            {
+                path: '/dashboard/staff-profile',
+                element: <StaffRoute><StaffProfilepage></StaffProfilepage></StaffRoute>
+            },
 
             // admin only routes
-            //   {
-            //     path: 'approve-riders',
-            //     element: <AdminRoute><ApproveRiders></ApproveRiders></AdminRoute>
-            //   },
+            {
+                path: '/dashboard/admin-profile',
+                element: <AdminRoute><AdminProfile></AdminProfile></AdminRoute>
+            },
+            {
+                path: '/dashboard/admin-allIssue',
+                element: <AdminRoute><AdminAllissues></AdminAllissues></AdminRoute>
+            },
+            {
+                path: '/dashboard/manage-user',
+                element: <AdminRoute><ManageUser></ManageUser></AdminRoute>
+            },
+            {
+                path: '/dashboard/manage-staff',
+                element: <AdminRoute><ManageStaff></ManageStaff></AdminRoute>
+            },
         ]
     }
 ]);

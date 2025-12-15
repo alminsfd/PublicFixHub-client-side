@@ -14,8 +14,10 @@ const Coverage = () => {
 
         const district = serviceCenters.find(c => c.district.toLowerCase().includes(location.toLowerCase()));
 
+
         if (district) {
             const coord = [district.latitude, district.longitude];
+
             mapRef.current.flyTo(coord, 14);
         }
     }
@@ -77,12 +79,12 @@ const Coverage = () => {
             </div>
 
             {/* Map  */}
-            <div className='border w-full h-[800px]'>
+            <div className='border w-full h-[300px] md:h-[800px]'>
                 <MapContainer
                     center={position}
                     zoom={8}
                     scrollWheelZoom={false}
-                    className='h-[800px]'
+                    className=' h-[300px] md:h-[800px]'
                     ref={mapRef}
                 >
                     <TileLayer

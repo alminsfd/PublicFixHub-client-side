@@ -3,8 +3,9 @@ import { RiFolderWarningLine } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
 import { Link, NavLink, Outlet } from 'react-router';
 import logoImg from '../../assets/Modern Logo with Beveled Gear and Gradient Pin.png';
-import { MdReport } from 'react-icons/md';
+import { MdAssignmentAdd, MdManageAccounts, MdOutlineAssignmentLate, MdReport } from 'react-icons/md';
 import useRole from '../../hooks/useRole';
+import { FaUserShield, FaUserTie } from 'react-icons/fa';
 
 
 const DashboardLayout = () => {
@@ -36,7 +37,7 @@ const DashboardLayout = () => {
                         <li>
                             < Link className='w-13 h-13 ' to="/"><img src={logoImg} alt="" /></Link>
                         </li>
-                        {/* List item */}
+
                         {/* user dashbard links */}
                         {
                             role === 'citizen' && <>
@@ -66,6 +67,74 @@ const DashboardLayout = () => {
                                         <span className="is-drawer-close:hidden">My Profile</span>
                                     </NavLink>
                                 </li>
+
+                            </>
+                        }
+
+                        {/* Staff Dashboard */}
+                        {
+                            role === 'staff' && <>
+
+                                <li>
+                                    <Link to='/dashboard' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
+                                        {/* Home icon */}
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                                        <span className="is-drawer-close:hidden">Homepage</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assign" to="/dashboard/AssingIssue">
+                                        <MdAssignmentAdd />
+                                        <span className="is-drawer-close:hidden">Assigned issue</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right  " data-tip="Profile" to="/dashboard/staff-profile">
+                                        <CgProfile />
+                                        <span className="is-drawer-close:hidden">Profile</span>
+                                    </NavLink>
+                                </li>
+
+
+                            </>
+                        }
+
+                        {/* admin Dashboard */}
+                        {
+                            role === 'admin' && <>
+
+                                <li>
+                                    <Link to='/dashboard' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
+                                        {/* Home icon */}
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                                        <span className="is-drawer-close:hidden">Homepage</span>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage issue" to="/dashboard/admin-allIssue">
+                                        <MdOutlineAssignmentLate />
+                                        <span className="is-drawer-close:hidden">Manage issue</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage issue" to="/dashboard/manage-user">
+                                        <MdManageAccounts />
+                                        <span className="is-drawer-close:hidden">Manage user</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage staff" to="/dashboard/manage-staff">
+                                        <FaUserTie />
+                                        <span className="is-drawer-close:hidden">Manage staff</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right  " data-tip="Profile" to="/dashboard/admin-profile">
+                                        <FaUserShield />
+                                        <span className="is-drawer-close:hidden">Profile</span>
+                                    </NavLink>
+                                </li>
+
 
                             </>
                         }
