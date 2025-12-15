@@ -32,7 +32,8 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/issue',
-                Component: Allissue
+                Component: Allissue,
+                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json())
 
             },
             {

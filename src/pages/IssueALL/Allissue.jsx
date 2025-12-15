@@ -3,10 +3,11 @@ import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { MdHowToVote } from 'react-icons/md';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLoaderData, useNavigate } from 'react-router';
 import Loading from '../../components/Loading/Loading';
 import Swal from 'sweetalert2';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const Allissue = () => {
     const { user } = useAuth();
@@ -15,19 +16,30 @@ const Allissue = () => {
     const [status, setStatus] = useState("");
     const [priority, setPriority] = useState("");
     const [category, setCategory] = useState("");
+    const categoryData = useLoaderData()
+    const [page, setPage] = useState(1);
+    const limit = 6;
+    useEffect(() => {
+        if (page !== 1) {
+            setPage(1);
+        }
+    }, [searchText, status, priority, category]);
 
     const navigate = useNavigate()
-    const { data: allIssues = [], isLoading, refetch } = useQuery({
-        queryKey: ["my-issues", searchText, user?.email, status, priority, category],
+    const { data, isLoading, refetch } = useQuery({
+        queryKey: ["my-issues", searchText, user?.email, status, priority, category, page],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/issues?searchText=${searchText}&status=${status}&priority=${priority}&category=${category}`);
+            const res = await axiosSecure.get(`/issues?searchText=${searchText}&page=${page}&limit=${limit}&status=${status}&priority=${priority}&category=${category}`);
             return res.data;
         }
     });
 
 
 
-    console.log(allIssues)
+    const allIssues = data?.issues || [];
+    const totalPages = data?.totalPages || 1;
+  
+
 
     const statusColor = {
         pending: "bg-yellow-100 text-yellow-700",
@@ -78,18 +90,6 @@ const Allissue = () => {
         high: 1,
         normal: 2
     };
-
-
-
-
-
-
-    // filteredIssues.length === 0 ? (
-    //     <div className="text-center  md:text-4xl col-span-full text-gray-500 py-10">
-    //         ❌ No issues found
-    //     </div>
-    // ) 
-
 
 
 
@@ -154,9 +154,13 @@ const Allissue = () => {
                             onChange={(e) => setCategory(e.target.value)}
                         >
                             <option value="">All Category</option>
-                            <option value="traffic">Traffic</option>
-                            <option value="road">Road</option>
-                            <option value="electricity">Electricity</option>
+                            {categoryData.map((cat) =>
+                                cat.items.map((item, i) => (
+                                    <option key={cat.id + "-" + i} value={item}>
+                                        {item}
+                                    </option>
+                                ))
+                            )}
                         </select>
                     </div>
                 </div>
@@ -230,6 +234,36 @@ const Allissue = () => {
                                 ))}
                 </div>
             </div>
+            <div className="flex justify-center mt-10 gap-2">
+
+                <button
+                    className="btn"
+                    disabled={page === 1}
+                    onClick={() => setPage(page - 1)}
+                >
+                    Prev
+                </button>
+
+                {[...Array(totalPages).keys()].map(num => (
+                    <button
+                        key={num}
+                        className={`btn ${page === num + 1 ? "btn-active" : ""}`}
+                        onClick={() => setPage(num + 1)}
+                    >
+                        {num + 1}
+                    </button>
+                ))}
+
+                <button
+                    className="btn"
+                    disabled={page === totalPages}
+                    onClick={() => setPage(page + 1)}
+                >
+                    Next
+                </button>
+
+            </div>
+
         </div>
 
 
