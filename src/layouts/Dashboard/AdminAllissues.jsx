@@ -148,7 +148,7 @@ const AdminAllissues = () => {
                                                   {/* Action */}
                                                   <td>
                                                        {
-                                                            issue.assignedStaff !== "N/A"
+                                                            issue.assignedStaff !== "N/A" || issue.status === 'rejected'
                                                                  ? (
                                                                       <button className="btn btn-sm" disabled>
                                                                            Assigned
@@ -167,7 +167,7 @@ const AdminAllissues = () => {
                                                   </td>
                                                   <td>
                                                        {
-                                                            issue.status === 'pending' ? <button
+                                                            issue.status === 'pending' && issue.assignedStaff === "N/A" ? <button
                                                                  onClick={() => handleReject(issue._id)}
                                                                  className="btn btn-error btn-sm"
                                                             >
