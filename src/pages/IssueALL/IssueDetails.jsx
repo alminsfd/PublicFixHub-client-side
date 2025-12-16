@@ -204,7 +204,7 @@ const IssueDetails = () => {
                                         Staff info
                                     </p>
                                     <p className="text-gray-600 dark:text-gray-400">
-                                        {myIssuesDetails.assignedStaff?.name}
+                                        {myIssuesDetails.assignedStaff?.name||'N/A'}
                                     </p>
                                 </div>
                                 <div className="p-4  rounded-xl bg-cyan-50 dark:bg-gray-800 border border-cyan-100 dark:border-gray-700">

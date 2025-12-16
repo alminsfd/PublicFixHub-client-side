@@ -71,7 +71,9 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
 
     const statusColor = {
         pending: "bg-yellow-100 text-yellow-700",
+        rejected:'bg-red-100 text-red-700',
         "in-progress": "bg-blue-100 text-blue-700",
+        working:'bg-fuchsia-100 text-fuchsia-100',
         resolved: "bg-green-100 text-green-700",
         closed: "bg-gray-200 text-gray-600",
     };
@@ -114,6 +116,9 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
                     <p className="text-sm text-gray-600">
                         <span className="font-bold" >location: </span>{issue.location}
                     </p>
+                    <p className="text-sm text-gray-600">
+                        <span className="font-bold" >Upvote: </span>{issue.upvotes}
+                    </p>
                     <p className="text-sm wrap-anywhere text-gray-600 leading-relaxed">
                         {issue.description
                             ? issue.description.split(' ').slice(0, 25).join(' ') +
@@ -122,15 +127,10 @@ const IssueCard = ({ refetch, issue, categoryData }) => {
                     </p>
 
                     {/* Footer */}
-                    <div className="flex  items-center justify-evenly pt-3">
-                        <div className="p-2 flex   justify-center items-center bg-cyan-50 dark:bg-gray-800 border border-cyan-100 dark:border-gray-700">
-                            <span className="font-semibold" > Upvote: </span>
-                            <p className="text-gray-600 text-center ml-1 font-bold   ">
-                                   {issue.upvotes}
-                            </p>
-                        </div>
-                        <button onClick={() => openEditModal(issue)} className="btn button w-1/3 " >Edit</button>
-                        <button onClick={() => handleDelete(issue._id)} className="btn button w-1/3 " >Delete</button>
+                    <div className="flex justify-between  items-center m-2  pt-3">
+                       
+                        <button onClick={() => openEditModal(issue)} className="btn btn-soft w-[100px]  btn-primary " >Edit</button>
+                        <button onClick={() => handleDelete(issue._id)} className="btn btn-soft btn-error w-[100px]  " >Delete</button>
 
                         {/* View Details */}
                     </div>

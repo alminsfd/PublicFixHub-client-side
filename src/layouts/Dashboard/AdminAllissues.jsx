@@ -78,7 +78,7 @@ const AdminAllissues = () => {
                          title: "Rejected!",
                          text: "Issue has been rejected."
                     });
-                    refetch(); 
+                    refetch();
                }
           } catch (error) {
                Swal.fire({
@@ -88,6 +88,14 @@ const AdminAllissues = () => {
           }
      };
 
+     const statusColor = {
+          pending: "bg-yellow-100 text-yellow-700",
+          rejected: 'bg-red-100 text-red-700',
+          "in-progress": "bg-blue-100 text-blue-700",
+          working: 'bg-fuchsia-100 text-fuchsia-100',
+          resolved: "bg-green-100 text-green-700",
+          closed: "bg-gray-200 text-gray-600",
+     };
 
 
      if (isLoading) {
@@ -95,96 +103,105 @@ const AdminAllissues = () => {
      }
      return (
           <div>
-               <div className="overflow-x-auto">
-                    <table className="table">
-                         {/* head */}
-                         <thead>
-                              <tr>
-                                   <th>Title</th>
-                                   <th>category</th>
-                                   <th>status</th>
-                                   <th>priority</th>
-                                   <th>assigned info</th>
-                                   <th>assigned status</th>
-                                   <th>Issue action</th>
-                              </tr>
-                         </thead>
-                         <tbody>
-                              {
 
-                                   [...adminIssues]
-                                        .sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]
+               {
+                    adminIssues.length === 0 ? (<div className="text-center  md:text-4xl min-h-screen  text-gray-500 flex justify-center items-center md:py-10">
+                         ❌ No issues found</div>) :
+
+                         <div className="overflow-x-auto">
+                              <table className="table">
+                                   {/* head */}
+                                   <thead>
+                                        <tr>
+                                             <th>Title</th>
+                                             <th>category</th>
+                                             <th>status</th>
+                                             <th>priority</th>
+                                             <th>assigned info</th>
+                                             <th>assigned status</th>
+                                             <th>Issue action</th>
+                                        </tr>
+                                   </thead>
+
+                                   <tbody>
+                                        {
 
 
-                                        ).map(issue => (
-                                             <tr key={issue._id}>
-                                                  <td className='font-bold' >{issue.title}</td>
-                                                  <td className='font-semibold' >{issue.catagory}</td>
 
-                                                  <td>
-                                                       <span className="  rounded-2xl px-2 py-1 bg-yellow-100 text-yellow-700">
-                                                            {issue.status}
-                                                       </span>
-                                                  </td>
+                                             [...adminIssues]
+                                                  .sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]
 
-                                                  <td>
-                                                       <span className={` px-2 py-1 rounded-2xl  ${issue.priority === "high"
-                                                            ? "bg-red-100 text-red-700"
-                                                            : " bg-green-100 text-green-700"
-                                                            }`}>
-                                                            {issue.priority}
-                                                       </span>
-                                                  </td>
 
-                                                  {/* Assigned Staff */}
-                                                  <td>
-                                                       {
-                                                            issue.assignedStaff !== "N/A"
-                                                                 ? issue.assignedStaff.name
-                                                                 : <span className="text-gray-400">Not Assigned</span>
-                                                       }
-                                                  </td>
+                                                  ).map(issue => (
+                                                       <tr key={issue._id}>
+                                                            <td className='font-bold' >{issue.title}</td>
+                                                            <td className='font-semibold' >{issue.catagory}</td>
 
-                                                  {/* Action */}
-                                                  <td>
-                                                       {
-                                                            issue.assignedStaff !== "N/A" || issue.status === 'rejected'
-                                                                 ? (
-                                                                      <button className="btn btn-sm" disabled>
-                                                                           Assigned
-                                                                      </button>
-                                                                 )
-                                                                 : (
-                                                                      <button
-                                                                           className='btn btn-sm btn-primary'
-                                                                           onClick={() =>
-                                                                                openAssignModal(issue)}
+                                                            <td>
+                                                                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusColor[issue.status]}`}>
+                                                                      {issue.status}
+                                                                 </span>
+                                                            </td>
+
+                                                            <td>
+                                                                 <span className={` px-2 py-1 rounded-2xl  ${issue.priority === "high"
+                                                                      ? "bg-red-100 text-red-700"
+                                                                      : " bg-green-100 text-green-700"
+                                                                      }`}>
+                                                                      {issue.priority}
+                                                                 </span>
+                                                            </td>
+
+                                                            {/* Assigned Staff */}
+                                                            <td>
+                                                                 {
+                                                                      issue.assignedStaff !== "N/A"
+                                                                           ? issue.assignedStaff.name
+                                                                           : <span className="text-gray-400">Not Assigned</span>
+                                                                 }
+                                                            </td>
+
+                                                            {/* Action */}
+                                                            <td>
+                                                                 {
+                                                                      issue.assignedStaff !== "N/A" || issue.status === 'rejected'
+                                                                           ? (
+                                                                                <button className="btn btn-sm" disabled>
+                                                                                     {issue.status === 'rejected' ? 'Not Assigned' : 'Assigned'}
+                                                                                </button>
+                                                                           )
+                                                                           : (
+                                                                                <button
+                                                                                     className='btn btn-sm btn-primary'
+                                                                                     onClick={() =>
+                                                                                          openAssignModal(issue)}
+                                                                                >
+                                                                                     Assign Staff
+                                                                                </button>
+                                                                           )
+                                                                 }
+                                                            </td>
+                                                            <td>
+                                                                 {
+                                                                      issue.status === 'pending' && issue.assignedStaff === "N/A" ? <button
+                                                                           onClick={() => handleReject(issue._id)}
+                                                                           className="btn btn-error btn-sm"
                                                                       >
-                                                                           Assign Staff
+                                                                           Reject
+                                                                      </button> : <button className="btn btn-sm" disabled>
+                                                                           Reject
                                                                       </button>
-                                                                 )
-                                                       }
-                                                  </td>
-                                                  <td>
-                                                       {
-                                                            issue.status === 'pending' && issue.assignedStaff === "N/A" ? <button
-                                                                 onClick={() => handleReject(issue._id)}
-                                                                 className="btn btn-error btn-sm"
-                                                            >
-                                                                 Reject
-                                                            </button> : <button className="btn btn-sm" disabled>
-                                                                 Reject
-                                                            </button>
-                                                       }
-                                                  </td>
-                                             </tr>
-                                        ))
-                              }
+                                                                 }
+                                                            </td>
+                                                       </tr>
+                                                  ))
+                                        }
 
 
-                         </tbody>
-                    </table>
-               </div>
+                                   </tbody>
+                              </table>
+                         </div>
+               }
                <dialog ref={editModalRef} className="modal modal-bottom sm:modal-middle">
                     <div className="modal-box">
                          <h3 className="font-bold text-lg mb-4">
@@ -201,7 +218,7 @@ const AdminAllissues = () => {
                                    setSelectedStaff(staff);
                               }}
                          >
-                              <option value="">Select Staff</option>
+                              <option value="" disabled >Select Staff</option>
 
                               {
                                    staffList.map(staff => (
@@ -219,12 +236,8 @@ const AdminAllissues = () => {
                                         className="btn btn-primary"
                                         onClick={handleAssignStaff}
                                    >
-                                        <button
-                                             className="btn btn-primary"
-                                             onClick={handleAssignStaff}
-                                        >
-                                             Confirm
-                                        </button>
+                                        Confirm
+                                        
                                    </button>
                               }
 
