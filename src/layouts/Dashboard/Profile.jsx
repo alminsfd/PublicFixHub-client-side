@@ -21,7 +21,7 @@ const Profile = () => {
             const res = await axiosSecure.get(`/users?email=${user?.email}`);
             return res.data
         }
-    });
+    })
     const {
         register,
         handleSubmit,

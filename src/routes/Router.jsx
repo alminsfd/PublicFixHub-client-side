@@ -28,6 +28,7 @@ import AdminProfile from "../layouts/Dashboard/AdminProfile";
 import AdminAllissues from "../layouts/Dashboard/AdminAllissues";
 import ManageUser from "../layouts/Dashboard/ManageUser";
 import ManageStaff from "../layouts/Dashboard/ManageStaff";
+import AdminPayment from "../layouts/Dashboard/AdminPayment";
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -142,6 +143,10 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/manage-staff',
                 element: <PrivateRoute><AdminRoute><ManageStaff></ManageStaff></AdminRoute></PrivateRoute>
+            },
+            {
+                path: '/dashboard/allpayment',
+                element: <PrivateRoute><AdminRoute><AdminPayment></AdminPayment></AdminRoute></PrivateRoute>
             },
         ]
     }

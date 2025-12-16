@@ -3,7 +3,7 @@ import { RiFolderWarningLine } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
 import { Link, NavLink, Outlet } from 'react-router';
 import logoImg from '../../assets/Modern Logo with Beveled Gear and Gradient Pin.png';
-import { MdAssignmentAdd, MdManageAccounts, MdOutlineAssignmentLate, MdReport } from 'react-icons/md';
+import { MdAssignmentAdd, MdManageAccounts, MdOutlineAssignmentLate, MdOutlinePayment, MdReport } from 'react-icons/md';
 import useRole from '../../hooks/useRole';
 import { FaUserShield, FaUserTie } from 'react-icons/fa';
 
@@ -132,6 +132,12 @@ const DashboardLayout = () => {
                                     <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right  " data-tip="Profile" to="/dashboard/admin-profile">
                                         <FaUserShield />
                                         <span className="is-drawer-close:hidden">Profile</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right  " data-tip="Payments" to="/dashboard/allpayment">
+                                        <MdOutlinePayment />
+                                        <span className="is-drawer-close:hidden">Payments</span>
                                     </NavLink>
                                 </li>
 
