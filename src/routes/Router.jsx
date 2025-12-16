@@ -119,29 +119,29 @@ export const router = createBrowserRouter([
 
             {
                 path: '/dashboard/AssingIssue',
-                element: <StaffRoute><AssignIssuepage></AssignIssuepage></StaffRoute>
+                element: <PrivateRoute><StaffRoute><AssignIssuepage></AssignIssuepage></StaffRoute></PrivateRoute>
             },
             {
                 path: '/dashboard/staff-profile',
-                element: <StaffRoute><StaffProfilepage></StaffProfilepage></StaffRoute>
+                element: <PrivateRoute><StaffRoute><StaffProfilepage></StaffProfilepage></StaffRoute></PrivateRoute>
             },
 
             // admin only routes
             {
                 path: '/dashboard/admin-profile',
-                element: <AdminRoute><AdminProfile></AdminProfile></AdminRoute>
+                element: <PrivateRoute><AdminRoute><AdminProfile></AdminProfile></AdminRoute></PrivateRoute>
             },
             {
                 path: '/dashboard/admin-allIssue',
-                element: <AdminRoute><AdminAllissues></AdminAllissues></AdminRoute>
+                element: <PrivateRoute><AdminRoute><AdminAllissues></AdminAllissues></AdminRoute></PrivateRoute>
             },
             {
                 path: '/dashboard/manage-user',
-                element: <AdminRoute><ManageUser></ManageUser></AdminRoute>
+                element: <PrivateRoute><AdminRoute><ManageUser></ManageUser></AdminRoute></PrivateRoute>
             },
             {
                 path: '/dashboard/manage-staff',
-                element: <AdminRoute><ManageStaff></ManageStaff></AdminRoute>
+                element: <PrivateRoute><AdminRoute><ManageStaff></ManageStaff></AdminRoute></PrivateRoute>
             },
         ]
     }

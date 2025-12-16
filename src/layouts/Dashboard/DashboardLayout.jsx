@@ -112,13 +112,13 @@ const DashboardLayout = () => {
                                 </li>
                                 <li>
                                     <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage issue" to="/dashboard/admin-allIssue">
-                                        <MdOutlineAssignmentLate />
+                                        <MdOutlineAssignmentLate size={16} />
                                         <span className="is-drawer-close:hidden">Manage issue</span>
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage issue" to="/dashboard/manage-user">
-                                        <MdManageAccounts />
+                                        <MdManageAccounts  size={18}/>
                                         <span className="is-drawer-close:hidden">Manage user</span>
                                     </NavLink>
                                 </li>

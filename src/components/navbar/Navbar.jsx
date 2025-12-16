@@ -47,7 +47,6 @@ const Navbar = () => {
     const links = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/issue">All Issues</NavLink></li>
-        <li><NavLink to="/be_a_staff">Be a Staff</NavLink></li>
         <li><NavLink to="/coverage">Coverage Areas</NavLink></li>
         {
             role === 'citizen' && <>
