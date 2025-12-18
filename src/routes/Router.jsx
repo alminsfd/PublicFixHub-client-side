@@ -29,6 +29,7 @@ import AdminAllissues from "../layouts/Dashboard/AdminAllissues";
 import ManageUser from "../layouts/Dashboard/ManageUser";
 import ManageStaff from "../layouts/Dashboard/ManageStaff";
 import AdminPayment from "../layouts/Dashboard/AdminPayment";
+import Loading from "../components/Loading/Loading";
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -42,7 +43,8 @@ export const router = createBrowserRouter([
             {
                 path: '/issue',
                 Component: Allissue,
-                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json())
+                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json()),
+                hydrateFallbackElement: <Loading></Loading>
 
             },
             {
@@ -52,12 +54,14 @@ export const router = createBrowserRouter([
             {
                 path: '/coverage',
                 Component: Coverage,
-                loader: () => fetch('../../public/serviceCenters.json').then(res => res.json())
+                loader: () => fetch('../../public/serviceCenters.json').then(res => res.json()),
+                hydrateFallbackElement: <Loading></Loading>
             },
             {
                 path: '/issueDetails/:id',
                 element: <PrivateRoute><IssueDetails></IssueDetails></PrivateRoute>,
-                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json())
+                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json()),
+                hydrateFallbackElement: <Loading></Loading>
             }
         ],
 
@@ -89,12 +93,14 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/report-issue',
                 element: <PrivateRoute><UserRoute><Report_issue></Report_issue></UserRoute>  </PrivateRoute>,
-                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json())
+                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json()),
+                hydrateFallbackElement:<Loading></Loading>
             },
             {
                 path: '/dashboard/my-issue',
                 element: <PrivateRoute><UserRoute><MyIssuePage></MyIssuePage></UserRoute></PrivateRoute>,
-                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json())
+                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json()),
+                hydrateFallbackElement: <Loading></Loading>
             },
             {
                 path: '/dashboard/my-profile',

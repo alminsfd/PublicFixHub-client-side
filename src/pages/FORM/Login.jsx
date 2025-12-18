@@ -4,11 +4,13 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from './SocialLogin';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import useRole from '../../hooks/useRole';
 
 const Login = () => {
     const { signInUser, setUser } = useAuth()
     const navigate = useNavigate()
     const location = useLocation()
+    const { role } = useRole()
 
     const {
         register,
@@ -21,6 +23,11 @@ const Login = () => {
         console.log(data);
         signInUser(data.email, data.password)
             .then(result => {
+
+                if (role === "staff") {
+                    navigate("/dashboard");
+                }
+
                 console.log(result.user)
                 setUser(result?.user)
                 navigate(location?.state || '/')
@@ -31,12 +38,12 @@ const Login = () => {
                 });
             })
             .catch(error => {
-                 const errorMessage = error.message;
+                const errorMessage = error.message;
                 Swal.fire({
                     icon: "error",
-                    text:errorMessage ,
+                    text: errorMessage,
                     title: "Something went wrong!",
-            
+
                 });
             })
 
