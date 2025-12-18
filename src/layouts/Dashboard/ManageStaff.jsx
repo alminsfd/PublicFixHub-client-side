@@ -25,8 +25,8 @@ const ManageStaff = () => {
           register,
           handleSubmit,
           reset,
-          formState: { errors }
      } = useForm({})
+     const addform = useForm()
      useEffect(() => {
           reset({
                photoURL: allstaffs[0]?.photoURL,
@@ -89,6 +89,7 @@ const ManageStaff = () => {
      if (isLoading) {
           <Loading></Loading>
      }
+  
      return (
           <>
 
@@ -215,51 +216,51 @@ const ManageStaff = () => {
                     <div className="modal-box">
                          <h3 className="text-xl font-bold mb-4">Add Staff</h3>
 
-                         <form onSubmit={handleSubmit(onSubmitAddStaff)} className="space-y-3">
+                         <form onSubmit={addform.handleSubmit(onSubmitAddStaff)} className="space-y-3">
                               <label className="block text-sm font-medium text-gray-700 mb-1">
                                    Name
                               </label>
-                              <input {...register("displayName", { required: true })}
+                              <input {...addform.register("displayName", { required: true })}
                                    placeholder="Name"
                                    className="input input-bordered w-full" />
-                              {errors.displayName?.type === "required" && (
+                              {addform.formState.errors.displayName?.type === "required" && (
                                    <p className='text-red-700 text-sm' > name is required</p>
                               )}
                               <label className="block text-sm font-medium text-gray-700 mb-1">
                                    Email
                               </label>
-                              <input {...register("email", { required: true })}
+                              <input {...addform.register("email", { required: true })}
                                    placeholder="Email"
                                    className="input input-bordered w-full" />
-                              {errors.email?.type === "required" && (
+                              {addform.formState.errors.email?.type === "required" && (
                                    <p className='text-red-700 text-sm' > email is required</p>
                               )}
                               <label className="block text-sm font-medium text-gray-700 mb-1">
                                    Phone
                               </label>
-                              <input {...register("phone")}
+                              <input {...addform.register("phone", { required: true })}
                                    placeholder="Phone"
                                    className="input input-bordered w-full" />
-                              {errors.phone?.type === "required" && (
+                              {addform.formState.errors.phone?.type === "required" && (
                                    <p className='text-red-700 text-sm' > phone is required</p>
                               )}
                               <label className="block text-sm font-medium text-gray-700 mb-1">
                                    Photo URL
                               </label>
-                              <input {...register("photoURL")}
+                              <input {...addform.register("photoURL", { required: true })}
                                    placeholder="Photo URL"
                                    className="input input-bordered w-full" />
-                              {errors.photoURL?.type === "required" && (
+                              {addform.formState.errors.photoURL?.type === "required" && (
                                    <p className='text-red-700 text-sm' > photo url is required</p>
                               )}
                               <label className="block text-sm font-medium text-gray-700 mb-1">
                                    Password
                               </label>
-                              <input {...register("password", { required: true })}
+                              <input {...addform.register("password", { required: true })}
                                    type="password"
                                    placeholder="Password"
                                    className="input input-bordered w-full" />
-                              {errors.password?.type === "required" && (
+                              {addform.formState.errors.password?.type === "required" && (
                                    <p className='text-red-700 text-sm' > password is required</p>
                               )}
 

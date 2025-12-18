@@ -4,13 +4,17 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from './SocialLogin';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
-import useRole from '../../hooks/useRole';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+
+
 
 const Login = () => {
-    const { signInUser, setUser } = useAuth()
+    const { signInUser, setUser, } = useAuth()
     const navigate = useNavigate()
     const location = useLocation()
-    const { role } = useRole()
+    const axiosSecure = useAxiosSecure();
+    
+
 
     const {
         register,
@@ -19,36 +23,41 @@ const Login = () => {
     } = useForm()
 
 
-    const handleLogin = (data) => {
-        console.log(data);
-        signInUser(data.email, data.password)
-            .then(result => {
+    const handleLogin = async (data) => {
+        try {
+          
+            const result = await signInUser(data.email, data.password);
+            const loggedUser = result.user;
+            setUser(loggedUser);
 
-                if (role === "staff") {
-                    navigate("/dashboard");
-                }
+          
+            const res = await axiosSecure.get(`/users/${loggedUser.email}`);
+            const User = res.data;
 
-                console.log(result.user)
-                setUser(result?.user)
-                navigate(location?.state || '/')
-                Swal.fire({
-                    title: "Successfully login done.",
-                    icon: "success",
-                    draggable: false
-                });
-            })
-            .catch(error => {
-                const errorMessage = error.message;
-                Swal.fire({
-                    icon: "error",
-                    text: errorMessage,
-                    title: "Something went wrong!",
+            console.log(User);
 
-                });
-            })
+           
+            if (User.role === "staff") {
+                navigate("/dashboard");
+            }
+            else {
+                navigate(location?.state || "/");
+            }
 
+            Swal.fire({
+                title: "Successfully login done.",
+                icon: "success",
+            });
 
-    }
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Something went wrong!",
+                text: error.message,
+            });
+        }
+    };
+
 
     return (
         <div className="  min-h-screen w-full bg-gray-50 flex items-center justify-center px-4">
