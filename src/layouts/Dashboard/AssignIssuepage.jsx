@@ -57,7 +57,11 @@ const AssignIssuepage = () => {
           try {
                const res = await axiosSecure.patch(
                     `/issues/${issue._id}/status`,
-                    { status: newStatus }
+                    {
+                         status: newStatus,
+                         trackingId: issue.trackingId
+
+                    }
                );
 
                if (res.data.modifiedCount > 0) {

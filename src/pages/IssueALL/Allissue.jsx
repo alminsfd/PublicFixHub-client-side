@@ -226,7 +226,7 @@ const Allissue = () => {
                                             </div>
 
                                             <Link
-                                                to={`/issueDetails/${issuelist._id}`}
+                                                to={`/issueDetails/${issuelist.trackingId}`}
                                                 className="btn btn-primary btn-outline btn-sm w-full mt-2"
                                             >
                                                 View Details

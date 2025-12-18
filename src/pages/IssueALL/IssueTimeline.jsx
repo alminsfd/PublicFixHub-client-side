@@ -1,14 +1,21 @@
 import React from "react";
 import { FaUserShield, FaUserTie, FaUser } from "react-icons/fa";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
-const statusColors = {
-  pending: "badge-warning",
-  "in-progress": "badge-info",
-  resolved: "badge-success",
-  closed: "badge-neutral",
-  rejected: "badge-error",
+
+
+
+const statusColor = {
+  pending: "bg-yellow-100 text-yellow-700",
+  rejected: 'bg-red-100 text-red-700',
+  "in-progress": "bg-blue-100 text-blue-700",
+  working: 'bg-fuchsia-100 text-fuchsia-700',
+  resolved: "bg-green-100 text-green-700",
+  closed: "bg-gray-200 text-gray-600",
   boosted: "badge-primary",
 };
+
 
 const roleIcons = {
   admin: <FaUserShield className="text-xl" />,
@@ -16,40 +23,22 @@ const roleIcons = {
   citizen: <FaUser className="text-xl" />,
 };
 
-const IssueTimeline = () => {
-    const timelineData = [
-        {
-            status: "pending",
-            message: "Issue reported by citizen",
-            updatedBy: "citizen",
-            date: "2025-12-07 | 10:35 AM",
-        },
-        {
-            status: "in-progress",
-            message: "Issue assigned to Staff: John Doe",
-            updatedBy: "admin",
-            date: "2025-12-07 | 11:00 AM",
-        },
-        {
-            status: "in-progress",
-            message: "Work started on the issue",
-            updatedBy: "staff",
-            date: "2025-12-07 | 12:15 PM",
-        },
-        {
-            status: "resolved",
-            message: "Issue marked as resolved",
-            updatedBy: "staff",
-            date: "2025-12-08 | 09:45 AM",
-        },
-        {
-            status: "closed",
-            message: "Issue closed by admin",
-            updatedBy: "admin",
-            date: "2025-12-08 | 10:10 AM",
-        },
-    ];
+const IssueTimeline = ({ id }) => {
+
+  const axiosSecure = useAxiosSecure();
+  const { data: timelineData = [], } = useQuery({
+    queryKey: ['issueTimeline', id],
+    enabled: !!id,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/issue-timeline/${id}`);
+      return res.data;
+    }
+  });
+
+  console.log(timelineData)
+
   return (
+
     <div className="w-full bg-white p-5 rounded-xl shadow-lg border">
       <h2 className="text-xl font-semibold mb-4">Issue Timeline</h2>
 
@@ -63,14 +52,14 @@ const IssueTimeline = () => {
 
             {/* Icon */}
             <div className="w-10 h-10 flex justify-center items-center bg-gray-100 rounded-full shadow">
-              {roleIcons[item.updatedBy] || <FaUser />}
+              {roleIcons[item.role] || <FaUser />}
             </div>
 
             {/* Content */}
             <div className="flex-1 bg-gray-50 p-4 rounded-xl border shadow-sm">
               {/* Status */}
               <span
-                className={`badge ${statusColors[item.status]} mb-2 text-xs`}
+                className={`badge ${statusColor[item.status]} mb-2 text-xs`}
               >
                 {item.status.replace("-", " ").toUpperCase()}
               </span>
@@ -81,10 +70,10 @@ const IssueTimeline = () => {
               {/* Updated By + Date */}
               <div className="text-sm text-gray-600 mt-1">
                 <span className="font-semibold capitalize">
-                  Updated by: {item.updatedBy}
+                  Updated by: {item.role}
                 </span>
                 <br />
-                <span>{item.date}</span>
+                <span className="font-semibold capitalize" >Date & time:{new Date(item.createdAt).toLocaleString()}</span>
               </div>
             </div>
           </div>

@@ -43,8 +43,10 @@ const AdminAllissues = () => {
                          name: selectedStaff.displayName,
                          email: selectedStaff.email,
                          photoURL: selectedStaff.photoURL,
-                         staffId: selectedStaff._id
+                         staffId: selectedStaff._id,
+                         trackingId: selectedIssue.trackingId
                     }
+                    
                }
           );
           editModalRef.current.close();
@@ -52,7 +54,7 @@ const AdminAllissues = () => {
 
      }
 
-     const handleReject = async (id) => {
+     const handleReject = async (id, trackingId) => {
           const result = await Swal.fire({
                title: "Are you sure?",
                text: "This issue will be rejected!",
@@ -64,13 +66,15 @@ const AdminAllissues = () => {
           });
 
           if (result.isConfirmed) {
-               rejectIssue(id);
+               rejectIssue(id, trackingId);
           }
      };
 
-     const rejectIssue = async (id) => {
+     const rejectIssue = async (id,trackingId) => {
           try {
-               const res = await axiosSecure.patch(`/issues/reject/${id}`);
+               const res = await axiosSecure.patch(`/issues/reject/${id}`, {
+                    trackingId:trackingId,
+               });
 
                if (res.data.modifiedCount > 0) {
                     Swal.fire({
@@ -92,7 +96,7 @@ const AdminAllissues = () => {
           pending: "bg-yellow-100 text-yellow-700",
           rejected: 'bg-red-100 text-red-700',
           "in-progress": "bg-blue-100 text-blue-700",
-          working: 'bg-fuchsia-100 text-fuchsia-100',
+          working: 'bg-fuchsia-100 text-fuchsia-700',
           resolved: "bg-green-100 text-green-700",
           closed: "bg-gray-200 text-gray-600",
      };
@@ -184,7 +188,7 @@ const AdminAllissues = () => {
                                                             <td>
                                                                  {
                                                                       issue.status === 'pending' && issue.assignedStaff === "N/A" ? <button
-                                                                           onClick={() => handleReject(issue._id)}
+                                                                           onClick={() => handleReject(issue._id, issue.trackingId)}
                                                                            className="btn btn-error btn-sm"
                                                                       >
                                                                            Reject

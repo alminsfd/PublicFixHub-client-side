@@ -379,7 +379,7 @@ const IssueDetails = () => {
                 </div>
             </dialog>
 
-            <IssueTimeline  ></IssueTimeline>
+            <IssueTimeline id={id} ></IssueTimeline>
         </>
     );
 };
