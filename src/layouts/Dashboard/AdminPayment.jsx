@@ -7,7 +7,7 @@ import Loading from '../../components/Loading/Loading';
 const AdminPayment = () => {
      const [paymentType, setPaymentType] = useState('');
      const axiosSecure = useAxiosSecure();
-     const { data: payments = [], refetch, isLoading } = useQuery({
+     const { data: payments = [],  isLoading } = useQuery({
           queryKey: ['payments', paymentType],
           queryFn: async () => {
                const res = await axiosSecure.get(

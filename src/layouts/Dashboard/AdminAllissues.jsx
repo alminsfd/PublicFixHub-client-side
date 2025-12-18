@@ -24,7 +24,7 @@ const AdminAllissues = () => {
      const priorityOrder = {
           high: 1,
           normal: 2
-     };
+     }
      const openAssignModal = async (issue) => {
           setSelectedIssue(issue)
           const res = await axiosSecure.get("/staff");
@@ -237,7 +237,7 @@ const AdminAllissues = () => {
                                         onClick={handleAssignStaff}
                                    >
                                         Confirm
-                                        
+
                                    </button>
                               }
 
