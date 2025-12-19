@@ -45,7 +45,7 @@ const Allissue = () => {
         pending: "bg-yellow-100 text-yellow-700",
         rejected: 'bg-red-100 text-red-700',
         "in-progress": "bg-blue-100 text-blue-700",
-        working: 'bg-fuchsia-100 text-fuchsia-100',
+        working: 'bg-fuchsia-100 text-fuchsia-800',
         resolved: "bg-green-100 text-green-700",
         closed: "bg-gray-200 text-gray-600",
     };

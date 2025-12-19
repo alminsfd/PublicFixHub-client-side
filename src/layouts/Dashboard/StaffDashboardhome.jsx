@@ -30,9 +30,9 @@ const StaffDashboardhome = () => {
     const barData = [
         {
             name: "Issues",
-            Pending: dashboard.assigned,
-            Progress: dashboard.resolved,
-            Resolved: dashboard.todayTasks,
+            Assigned: dashboard.assigned,
+            Resolved: dashboard.resolved,
+            Todaytasks: dashboard.todayTasks,
         },
     ];
 
@@ -42,7 +42,7 @@ const StaffDashboardhome = () => {
 
 
     if (isLoading) {
-        <Loading></Loading>
+       return <Loading></Loading>
     }
     return (
 
@@ -93,9 +93,9 @@ const StaffDashboardhome = () => {
                         <XAxis dataKey="name" />
                         <YAxis />
                         <Tooltip />
-                        <Bar dataKey="Pending" fill="#facc15" />
-                        <Bar dataKey="Progress" fill="#38bdf8" />
-                        <Bar dataKey="Resolved" fill="#4ade80" />
+                        <Bar dataKey="Assigned" fill="#facc15" />
+                        <Bar dataKey="Resolved" fill="#38bdf8" />
+                        <Bar dataKey="Todaytasks" fill="#4ade80" />
                     </BarChart>
                 </ResponsiveContainer>
             </div>

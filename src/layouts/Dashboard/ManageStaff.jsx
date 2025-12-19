@@ -87,7 +87,7 @@ const ManageStaff = () => {
 
 
      if (isLoading) {
-          <Loading></Loading>
+         return <Loading></Loading>
      }
   
      return (

@@ -144,7 +144,7 @@ const IssueDetails = () => {
     }
 
     if (isLoading) {
-        <Loading></Loading>
+       return <Loading></Loading>
     }
 
     return (

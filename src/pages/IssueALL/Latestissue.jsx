@@ -66,7 +66,7 @@ const Latestissue = () => {
                                         </p>
                                                   
                                         <Link
-                                             to={`/issueDetails/${issue._id}`}
+                                             to={`/issueDetails/${issue.trackingId}`}
                                              className=" btn button px-3 py-2 w-full "
                                         >
                                              View Details

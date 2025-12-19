@@ -36,7 +36,7 @@ const UserDashboardhome = () => {
     })
 
     if (isLoading) {
-        <Loading></Loading>
+      return  <Loading></Loading>
     }
     //calculating
     const totalIssues = issues.length;

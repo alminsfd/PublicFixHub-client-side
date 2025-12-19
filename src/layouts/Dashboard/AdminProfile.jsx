@@ -35,7 +35,7 @@ const AdminProfile = () => {
      }, [admin, reset])
 
      if (isLoading) {
-          <Loading></Loading>
+       return <Loading></Loading>
      }
      const onSubmitUpdate = async (data) => {
           updateModalRef.current.close()
