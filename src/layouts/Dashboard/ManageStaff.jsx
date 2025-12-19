@@ -87,72 +87,151 @@ const ManageStaff = () => {
 
 
      if (isLoading) {
-         return <Loading></Loading>
+          return <Loading></Loading>
      }
-  
+
      return (
           <>
 
                {
                     allstaffs.length === 0 ? (<div className="text-center  md:text-4xl min-h-screen  text-gray-500 flex justify-center items-center md:py-10">
                          ❌ No issues found</div>) : (
-                         <table className="table table-zebra">
-                              <thead>
-                                   <tr>
-                                        <th>staff</th>
-                                        <th>Email</th>
-                                        <th>Status</th>
-                                        <th>Admin action</th>
-                                        <th>Add action</th>
-                                   </tr>
-                              </thead>
-                              <tbody>
-                                   {
-                                        allstaffs.map(user => (
-                                             <tr key={user._id}>
-                                                  <td className="flex items-center gap-2">
-                                                       <img src={user.photoURL} className="w-10 h-10 rounded-full" />
-                                                       <div className='flex flex-col' >
-                                                            <small className='font-bold' >name</small>
-                                                            <small> {user.displayName}</small>
-                                                       </div>
-                                                  </td>
-                                                  <td className='font-bold' >{user.email}</td>
+                              <>
+                              
+                                   <div className="hidden md:block overflow-x-auto">
+                                        <table className="table table-zebra w-full">
+                                             <thead>
+                                                  <tr>
+                                                       <th>Staff</th>
+                                                       <th>Email</th>
+                                                       <th>Status</th>
+                                                       <th>Admin Action</th>
+                                                       <th>Add Action</th>
+                                                  </tr>
+                                             </thead>
 
-                                                  <td>
-                                                       {user.isBlocked ?
-                                                            <span className="bg-gray-200 px-2 py-1 rounded-2xl  text-gray-950">Blocked</span> :
-                                                            <span className="bg-green-600 text-white  px-2 py-1 rounded-2xl  ">Active</span>
-                                                       }
-                                                  </td>
-                                                  <td  >
+                                             <tbody>
+                                                  {allstaffs.map(user => (
+                                                       <tr key={user._id}>
+                                                            {/* STAFF */}
+                                                            <td>
+                                                                 <div className="flex items-center gap-3">
+                                                                      <img
+                                                                           src={user.photoURL}
+                                                                           className="w-10 h-10 rounded-full object-cover"
+                                                                           alt="staff"
+                                                                      />
+                                                                      <div>
+                                                                           <p className="font-semibold">{user.displayName}</p>
+                                                                      </div>
+                                                                 </div>
+                                                            </td>
+
+                                                            {/* EMAIL */}
+                                                            <td className="font-medium">{user.email}</td>
+
+                                                            {/* STATUS */}
+                                                            <td>
+                                                                 {user.isBlocked ? (
+                                                                      <span className="bg-gray-200 px-3 py-1 rounded-full text-gray-900 text-sm">
+                                                                           Blocked
+                                                                      </span>
+                                                                 ) : (
+                                                                      <span className="bg-green-600 px-3 py-1 rounded-full text-white text-sm">
+                                                                           Active
+                                                                      </span>
+                                                                 )}
+                                                            </td>
+
+                                                            {/* ADMIN ACTION */}
+                                                            <td className="space-x-2">
+                                                                 <button
+                                                                      onClick={() => handleDelete(user)}
+                                                                      className="btn btn-xs btn-error"
+                                                                 >
+                                                                      Delete
+                                                                 </button>
+
+                                                                 <button
+                                                                      onClick={() => openEditModal(user)}
+                                                                      className="btn btn-xs btn-success"
+                                                                 >
+                                                                      Update
+                                                                 </button>
+                                                            </td>
+
+                                                            {/* ADD ACTION */}
+                                                            <td>
+                                                                 <button
+                                                                      className="btn btn-xs btn-primary"
+                                                                      onClick={() => addStaffModalRef.current.showModal()}
+                                                                 >
+                                                                      Add Staff
+                                                                 </button>
+                                                            </td>
+                                                       </tr>
+                                                  ))}
+                                             </tbody>
+                                        </table>
+                                   </div>
+                                   < div className="md:hidden space-y-4">
+                                        {allstaffs.map(user => (
+                                             <div
+                                                  key={user._id}
+                                                  className="bg-base-100 shadow-md rounded-xl p-4 space-y-3"
+                                             >
+                                                  {/* STAFF INFO */}
+                                                  <div className="flex items-center gap-3">
+                                                       <img
+                                                            src={user.photoURL}
+                                                            className="w-12 h-12 rounded-full object-cover"
+                                                            alt="staff"
+                                                       />
+                                                       <div>
+                                                            <p className="font-bold">{user.displayName}</p>
+                                                            <p className="text-sm text-gray-500">{user.email}</p>
+                                                       </div>
+                                                  </div>
+
+                                                  {/* STATUS */}
+                                                  <div className="flex justify-between">
+                                                       <span className="font-semibold">Status:</span>
+                                                       {user.isBlocked ? (
+                                                            <span className="text-gray-600 font-medium">Blocked</span>
+                                                       ) : (
+                                                            <span className="text-green-600 font-medium">Active</span>
+                                                       )}
+                                                  </div>
+
+                                                  {/* ACTION BUTTONS */}
+                                                  <div className="flex gap-2 pt-2">
                                                        <button
                                                             onClick={() => handleDelete(user)}
-                                                            className={` mr-2  btn-error btn btn-xs `}
+                                                            className="btn btn-sm btn-error flex-1"
                                                        >
-                                                            delete
-                                                       </button>
-                                                       <button
-                                                            onClick={() => openEditModal(user)}
-                                                            className={`btn  btn-success btn-xs `}
-                                                       >
-                                                            update
-                                                       </button>
-                                                  </td>
-                                                  <td>
-                                                       <button
-                                                            className="btn btn-xs btn-primary"
-                                                            onClick={() => addStaffModalRef.current.showModal()}
-                                                       >
-                                                            add staff
+                                                            Delete
                                                        </button>
 
-                                                  </td>
-                                             </tr>
-                                        ))
-                                   }
-                              </tbody>
-                         </table>)
+                                                       <button
+                                                            onClick={() => openEditModal(user)}
+                                                            className="btn btn-sm btn-success flex-1"
+                                                       >
+                                                            Update
+                                                       </button>
+                                                  </div>
+
+                                                  <button
+                                                       onClick={() => addStaffModalRef.current.showModal()}
+                                                       className="btn btn-sm btn-primary w-full"
+                                                  >
+                                                       Add Staff
+                                                  </button>
+                                             </div>
+                                        ))}
+                                   </div >
+                              </>)
+                      
+
                }
                <dialog ref={updateModalRef} className="modal modal-bottom sm:modal-middle">
                     <div className="modal-box">
