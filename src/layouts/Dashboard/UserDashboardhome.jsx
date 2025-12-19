@@ -34,8 +34,7 @@ const UserDashboardhome = () => {
             return res.data;
         },
     })
-    console.log(issuesPayment)
-    console.log(issues)
+
     if (isLoading) {
         <Loading></Loading>
     }
