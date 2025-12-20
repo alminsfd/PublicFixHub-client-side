@@ -5,7 +5,6 @@ import Allissue from "../pages/IssueALL/Allissue";
 import Coverage from "../pages/Covrage/Coverage";
 import DashboardLayout from "../layouts/Dashboard/DashboardLayout";
 import DashboardHome from "../layouts/Dashboard/DashboardHome";
-import Bestaff from "../pages/Be a staff/Bestaff";
 import Errorpage from "../pages/Errorpage/Errorpage";
 import IssueDetails from "../pages/IssueALL/IssueDetails";
 import AuthLayout from "../layouts/AuthLayout";
@@ -30,6 +29,7 @@ import ManageUser from "../layouts/Dashboard/ManageUser";
 import ManageStaff from "../layouts/Dashboard/ManageStaff";
 import AdminPayment from "../layouts/Dashboard/AdminPayment";
 import Loading from "../components/Loading/Loading";
+import About from "../pages/About";
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -48,8 +48,8 @@ export const router = createBrowserRouter([
 
             },
             {
-                path: '/be_a_staff',
-                element: <PrivateRoute><Bestaff></Bestaff></PrivateRoute>
+                path: '/about',
+                element: <About></About>
             },
             {
                 path: '/coverage',

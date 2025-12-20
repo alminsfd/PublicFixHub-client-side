@@ -8,6 +8,8 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import PDFcomponent from '../../pages/IssueALL/PDFcomponent';
 
 
 const Profile = () => {
@@ -22,6 +24,17 @@ const Profile = () => {
             return res.data
         }
     })
+    const { data: myPayments = {} } = useQuery({
+        queryKey: ['my-payments', user?.email],
+        enabled: !!user?.email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/payments/profile?email=${user.email}`);
+            return res.data;
+        }
+    });
+
+    console.log(myPayments)
+
     const {
         register,
         handleSubmit,
@@ -33,10 +46,8 @@ const Profile = () => {
             displayName: myProfie[0]?.displayName,
             email: myProfie[0]?.email
         })
-    }, [myProfie,reset])
-    if (isLoading) {
-        return <Loading></Loading>
-    }
+    }, [myProfie, reset])
+   
 
     const onSubmitUpdate = async (data) => {
         updateModalRef.current.close()
@@ -73,6 +84,10 @@ const Profile = () => {
             }
         });
     }
+
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     return (
         <>
             {
@@ -103,22 +118,32 @@ const Profile = () => {
                             </div>
                         )}
                         <div className='flex justify-between items-center' >
-                            <button onClick={() => openEditModal(user)} className='button w-1/2 mx-1  py-2 px-3' >update  profile</button>
+                            <button onClick={() => openEditModal(user)} className='button w-1/3 mx-1  py-2 px-3' >update </button>
 
                             {
                                 user.isPremium ? (
-                                    <button className="btn w-1/2 py-2 px-3" disabled>Premium User</button>
+                                    <button className="btn w-1/3 py-2 px-3" disabled>Premium User</button>
                                 ) : (
                                     <button
-                                        className="button w-1/2 py-2 px-3"
+                                        className="button w-1/3 py-2 px-3"
                                         onClick={() => setShowPayment(user)}
                                     >
-                                        Subscribe (1000৳)
+                                        Subscribe
                                     </button>
                                 )
                             }
 
+                            <button className='button w-1/3 mx-1  py-2 px-3' >
+                                <PDFDownloadLink
+                                    document={<PDFcomponent payment={myPayments} />}
+                                    fileName={`invoice-${myPayments.transactionId}.pdf`}
+                                >
+                                    {({ loading }) =>
+                                        loading ? 'Generating...' : 'Invoice'
+                                    }
+                                </PDFDownloadLink>
 
+                            </button>
 
 
                         </div>

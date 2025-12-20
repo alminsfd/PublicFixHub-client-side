@@ -2,6 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Loading from '../../components/Loading/Loading';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import PDFcomponent from '../../pages/IssueALL/PDFcomponent';
+
+
 
 
 const AdminPayment = () => {
@@ -36,14 +40,15 @@ const AdminPayment = () => {
                     </select>
                </div>
                <div className='overflow-x-auto' >
-                    <table className=" mt-4 table table-zebra min-w-[600px] ">
+                    <table className=" mt-4 table table-zebra min-w-[600px] space-y-3.5 ">
                          <thead>
                               <tr>
                                    <th>#</th>
                                    <th>Email</th>
                                    <th>Type</th>
                                    <th>Amount</th>
-                                   <th>Transaction</th>
+                                   <th className='hidden md:table-cell' >Transaction</th>
+                                   <th>  Invoice</th>
                                    <th className='hidden md:table-cell' >Paid At</th>
                               </tr>
                          </thead>
@@ -59,7 +64,22 @@ const AdminPayment = () => {
                                                   </span>
                                              </td>
                                              <td className='max-w-[220px] truncate' >{pay.amount} {pay.currency.toUpperCase()}</td>
-                                             <td className='max-w-[150px] truncate' >{pay.transactionId}</td>
+                                             <td className='hidden md:table-cell capitalize' >{pay.transactionId}</td>
+                                             <td className=' max-w-[150px] truncate ' >
+
+                                                  <PDFDownloadLink
+                                                       document={<PDFcomponent payment={pay} />}
+                                                       fileName={`invoice-${pay.transactionId}.pdf`}
+                                                  >
+                                                       {({ loading }) =>
+                                                            loading ? (
+                                                                 <button className="btn btn-sm btn-disabled">Loading...</button>
+                                                            ) : (
+                                                                 <button className="btn btn-sm btn-primary">Download</button>
+                                                            )
+                                                       }
+                                                  </PDFDownloadLink>
+                                             </td>
                                              <td className='hidden md:table-cell capitalize ' >{new Date(pay.paidAt).toLocaleString()}</td>
                                         </tr>
                                    ))
