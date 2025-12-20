@@ -34,7 +34,7 @@ const Login = () => {
             const res = await axiosSecure.get(`/users/${loggedUser.email}`);
             const User = res.data;
 
-            console.log(User);
+           
 
            
             if (User.role === "staff") {

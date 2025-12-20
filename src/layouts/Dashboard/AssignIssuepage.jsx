@@ -26,7 +26,7 @@ const AssignIssuepage = () => {
           }
      });
 
-     console.log(staffIssues)
+
 
      const priorityOrder = {
           high: 1,

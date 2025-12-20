@@ -37,7 +37,7 @@ const ManageStaff = () => {
 
      const onSubmitUpdate = async (data) => {
           updateModalRef.current.close()
-          console.log(data)
+
           const res = await axiosSecure.patch(`/users/${selectedIssue._id}`, data);
           if (res.data.modifiedCount > 0) {
                Swal.fire("Updated!", " updated successfully");
@@ -95,142 +95,148 @@ const ManageStaff = () => {
 
                {
                     allstaffs.length === 0 ? (<div className="text-center  md:text-4xl min-h-screen  text-gray-500 flex justify-center items-center md:py-10">
-                         ❌ No issues found</div>) : (
-                              <>
-                              
-                                   <div className="hidden md:block overflow-x-auto">
-                                        <table className="table table-zebra w-full">
-                                             <thead>
-                                                  <tr>
-                                                       <th>Staff</th>
-                                                       <th>Email</th>
-                                                       <th>Status</th>
-                                                       <th>Admin Action</th>
-                                                       <th>Add Action</th>
-                                                  </tr>
-                                             </thead>
+                         <button
+                              onClick={() => addStaffModalRef.current.showModal()}
+                              className="btn btn-sm btn-primary "
+                         >
+                              Add Staff
+                         </button>
+                    </div>) : (
+                         <>
 
-                                             <tbody>
-                                                  {allstaffs.map(user => (
-                                                       <tr key={user._id}>
-                                                            {/* STAFF */}
-                                                            <td>
-                                                                 <div className="flex items-center gap-3">
-                                                                      <img
-                                                                           src={user.photoURL}
-                                                                           className="w-10 h-10 rounded-full object-cover"
-                                                                           alt="staff"
-                                                                      />
-                                                                      <div>
-                                                                           <p className="font-semibold">{user.displayName}</p>
-                                                                      </div>
+                              <div className="hidden md:block overflow-x-auto">
+                                   <table className="table table-zebra w-full">
+                                        <thead>
+                                             <tr>
+                                                  <th>Staff</th>
+                                                  <th>Email</th>
+                                                  <th>Status</th>
+                                                  <th>Admin Action</th>
+                                                  <th>Add Action</th>
+                                             </tr>
+                                        </thead>
+
+                                        <tbody>
+                                             {allstaffs.map(user => (
+                                                  <tr key={user._id}>
+                                                       {/* STAFF */}
+                                                       <td>
+                                                            <div className="flex items-center gap-3">
+                                                                 <img
+                                                                      src={user.photoURL}
+                                                                      className="w-10 h-10 rounded-full object-cover"
+                                                                      alt="staff"
+                                                                 />
+                                                                 <div>
+                                                                      <p className="font-semibold">{user.displayName}</p>
                                                                  </div>
-                                                            </td>
+                                                            </div>
+                                                       </td>
 
-                                                            {/* EMAIL */}
-                                                            <td className="font-medium">{user.email}</td>
+                                                       {/* EMAIL */}
+                                                       <td className="font-medium">{user.email}</td>
 
-                                                            {/* STATUS */}
-                                                            <td>
-                                                                 {user.isBlocked ? (
-                                                                      <span className="bg-gray-200 px-3 py-1 rounded-full text-gray-900 text-sm">
-                                                                           Blocked
-                                                                      </span>
-                                                                 ) : (
-                                                                      <span className="bg-green-600 px-3 py-1 rounded-full text-white text-sm">
-                                                                           Active
-                                                                      </span>
-                                                                 )}
-                                                            </td>
+                                                       {/* STATUS */}
+                                                       <td>
+                                                            {user.isBlocked ? (
+                                                                 <span className="bg-gray-200 px-3 py-1 rounded-full text-gray-900 text-sm">
+                                                                      Blocked
+                                                                 </span>
+                                                            ) : (
+                                                                 <span className="bg-green-600 px-3 py-1 rounded-full text-white text-sm">
+                                                                      Active
+                                                                 </span>
+                                                            )}
+                                                       </td>
 
-                                                            {/* ADMIN ACTION */}
-                                                            <td className="space-x-2">
-                                                                 <button
-                                                                      onClick={() => handleDelete(user)}
-                                                                      className="btn btn-xs btn-error"
-                                                                 >
-                                                                      Delete
-                                                                 </button>
+                                                       {/* ADMIN ACTION */}
+                                                       <td className="space-x-2">
+                                                            <button
+                                                                 onClick={() => handleDelete(user)}
+                                                                 className="btn btn-xs btn-error"
+                                                            >
+                                                                 Delete
+                                                            </button>
 
-                                                                 <button
-                                                                      onClick={() => openEditModal(user)}
-                                                                      className="btn btn-xs btn-success"
-                                                                 >
-                                                                      Update
-                                                                 </button>
-                                                            </td>
+                                                            <button
+                                                                 onClick={() => openEditModal(user)}
+                                                                 className="btn btn-xs btn-success"
+                                                            >
+                                                                 Update
+                                                            </button>
+                                                       </td>
 
-                                                            {/* ADD ACTION */}
-                                                            <td>
-                                                                 <button
-                                                                      className="btn btn-xs btn-primary"
-                                                                      onClick={() => addStaffModalRef.current.showModal()}
-                                                                 >
-                                                                      Add Staff
-                                                                 </button>
-                                                            </td>
-                                                       </tr>
-                                                  ))}
-                                             </tbody>
-                                        </table>
-                                   </div>
-                                   < div className="md:hidden space-y-4">
-                                        {allstaffs.map(user => (
-                                             <div
-                                                  key={user._id}
-                                                  className="bg-base-100 shadow-md rounded-xl p-4 space-y-3"
-                                             >
-                                                  {/* STAFF INFO */}
-                                                  <div className="flex items-center gap-3">
-                                                       <img
-                                                            src={user.photoURL}
-                                                            className="w-12 h-12 rounded-full object-cover"
-                                                            alt="staff"
-                                                       />
-                                                       <div>
-                                                            <p className="font-bold">{user.displayName}</p>
-                                                            <p className="text-sm text-gray-500">{user.email}</p>
-                                                       </div>
+                                                       {/* ADD ACTION */}
+                                                       <td>
+                                                            <button
+                                                                 className="btn btn-xs btn-primary"
+                                                                 onClick={() => addStaffModalRef.current.showModal()}
+                                                            >
+                                                                 Add Staff
+                                                            </button>
+                                                       </td>
+                                                  </tr>
+                                             ))}
+                                        </tbody>
+                                   </table>
+                              </div>
+                              < div className="md:hidden space-y-4">
+                                   {allstaffs.map(user => (
+                                        <div
+                                             key={user._id}
+                                             className="bg-base-100 shadow-md rounded-xl p-4 space-y-3"
+                                        >
+                                             {/* STAFF INFO */}
+                                             <div className="flex items-center gap-3">
+                                                  <img
+                                                       src={user.photoURL}
+                                                       className="w-12 h-12 rounded-full object-cover"
+                                                       alt="staff"
+                                                  />
+                                                  <div>
+                                                       <p className="font-bold">{user.displayName}</p>
+                                                       <p className="text-sm text-gray-500">{user.email}</p>
                                                   </div>
+                                             </div>
 
-                                                  {/* STATUS */}
-                                                  <div className="flex justify-between">
-                                                       <span className="font-semibold">Status:</span>
-                                                       {user.isBlocked ? (
-                                                            <span className="text-gray-600 font-medium">Blocked</span>
-                                                       ) : (
-                                                            <span className="text-green-600 font-medium">Active</span>
-                                                       )}
-                                                  </div>
+                                             {/* STATUS */}
+                                             <div className="flex justify-between">
+                                                  <span className="font-semibold">Status:</span>
+                                                  {user.isBlocked ? (
+                                                       <span className="text-gray-600 font-medium">Blocked</span>
+                                                  ) : (
+                                                       <span className="text-green-600 font-medium">Active</span>
+                                                  )}
+                                             </div>
 
-                                                  {/* ACTION BUTTONS */}
-                                                  <div className="flex gap-2 pt-2">
-                                                       <button
-                                                            onClick={() => handleDelete(user)}
-                                                            className="btn btn-sm btn-error flex-1"
-                                                       >
-                                                            Delete
-                                                       </button>
-
-                                                       <button
-                                                            onClick={() => openEditModal(user)}
-                                                            className="btn btn-sm btn-success flex-1"
-                                                       >
-                                                            Update
-                                                       </button>
-                                                  </div>
+                                             {/* ACTION BUTTONS */}
+                                             <div className="flex gap-2 pt-2">
+                                                  <button
+                                                       onClick={() => handleDelete(user)}
+                                                       className="btn btn-sm btn-error flex-1"
+                                                  >
+                                                       Delete
+                                                  </button>
 
                                                   <button
-                                                       onClick={() => addStaffModalRef.current.showModal()}
-                                                       className="btn btn-sm btn-primary w-full"
+                                                       onClick={() => openEditModal(user)}
+                                                       className="btn btn-sm btn-success flex-1"
                                                   >
-                                                       Add Staff
+                                                       Update
                                                   </button>
                                              </div>
-                                        ))}
-                                   </div >
-                              </>)
-                      
+
+                                             <button
+                                                  onClick={() => addStaffModalRef.current.showModal()}
+                                                  className="btn btn-sm btn-primary w-full"
+                                             >
+                                                  Add Staff
+                                             </button>
+                                        </div>
+                                   ))}
+                              </div >
+                         </>)
+
 
                }
                <dialog ref={updateModalRef} className="modal modal-bottom sm:modal-middle">

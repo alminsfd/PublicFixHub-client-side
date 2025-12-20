@@ -17,7 +17,7 @@ const SocialLogin = () => {
     const handleGoogleSignIn = () => {
         signInGoogle()
             .then(result => {
-                console.log(result.user);
+               
                 setUser(result?.user)
 
 

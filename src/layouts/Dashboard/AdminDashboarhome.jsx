@@ -29,8 +29,7 @@ const AdminDashboarhome = () => {
         }
     });
 
-    console.log(Totalpayments)
-
+   
     const { data: latestPayments = [] } = useQuery({
         queryKey: ['latestPayments'],
         queryFn: async () => {
@@ -48,7 +47,7 @@ const AdminDashboarhome = () => {
     });
 
 
-    console.log(issueStats)
+   
 
 
     const COLORS = [

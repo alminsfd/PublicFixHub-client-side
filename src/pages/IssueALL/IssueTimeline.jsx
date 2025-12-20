@@ -35,7 +35,7 @@ const IssueTimeline = ({ id }) => {
     }
   });
 
-  console.log(timelineData)
+
 
   return (
 

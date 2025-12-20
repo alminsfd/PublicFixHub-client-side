@@ -39,7 +39,7 @@ const StaffProfilepage = () => {
      }
      const onSubmitUpdate = async (data) => {
           updateModalRef.current.close()
-          console.log(data)
+       
           const res = await axiosSecure.patch(`/users/${selectedIssue._id}`, data);
           if (res.data.modifiedCount > 0) {
                Swal.fire("Updated!", "profile updated successfully", "success");
@@ -50,7 +50,7 @@ const StaffProfilepage = () => {
           setSelectedIssue(user);
           updateModalRef.current.showModal()
      }
-     console.log(staff)
+   
      return (
           <>
                {

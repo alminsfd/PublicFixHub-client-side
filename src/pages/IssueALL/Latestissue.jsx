@@ -24,7 +24,7 @@ const Latestissue = () => {
           high: "bg-red-100 text-red-700",
           normal: "bg-green-100 text-green-700",
      };
-     console.log(LeastestIssues)
+
      return (
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10' >
                {

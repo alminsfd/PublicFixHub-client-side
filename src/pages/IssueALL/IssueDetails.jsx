@@ -34,7 +34,7 @@ const IssueDetails = () => {
         control,
         reset
     } = useForm({})
-    console.log(myIssuesDetails)
+
     useEffect(() => {
         reset({
             photoURL: myIssuesDetails?.photoURL,
@@ -46,7 +46,6 @@ const IssueDetails = () => {
 
         })
     }, [myIssuesDetails, reset])
-    console.log(myIssuesDetails)
     const handleDelete = async (id) => {
         Swal.fire({
             title: "Are you sure?",

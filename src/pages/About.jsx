@@ -70,7 +70,7 @@ const About = () => {
 
                {/* Who We Are */}
                <div
-                    className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-10 mb-14"
+                    className="bg-linear-to-r from-primary/10 to-secondary/10 rounded-2xl p-10 mb-14"
                     data-aos="zoom-in"
                >
                     <div className="max-w-4xl mx-auto text-center">

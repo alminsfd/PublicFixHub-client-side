@@ -19,7 +19,7 @@ const Register = () => {
 
     const handleRegister = (data) => {
         const profileImg = data.photo[0];
-        console.log(data);
+ 
 
 
         registerUser(data.email, data.password)

@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 
+
 const Navbar = () => {
     const { user, logOut } = useAuth();
     const { role } = useRole()
@@ -20,9 +21,6 @@ const Navbar = () => {
             return res.data;
         }
     });
-
-    console.log(user)
-
     const handleLogOut = () => {
         logOut()
             .then(() => {
@@ -101,10 +99,10 @@ const Navbar = () => {
                 {
                     user ?
                         <>
-
+                            
                             <div className="dropdown dropdown-end cursor-pointer  ">
                                 <div tabIndex={0} role="button" className="m-1">
-                                    <img className='w-12 h-12 rounded-full' src={user?.photoURL} referrerPolicy="no-referrer" alt="" />
+                                    <img className='w-12 h-12 rounded-full' src={myUser[0]?.photoURL} referrerPolicy="no-referrer" alt=''/>
                                 </div>
                                 <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                                     {

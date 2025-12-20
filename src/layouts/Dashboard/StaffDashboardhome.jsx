@@ -17,7 +17,7 @@ const StaffDashboardhome = () => {
         }
     });
 
-    console.log(dashboard)
+
     const COLORS = ["#facc15", "#38bdf8", "#4ade80"];
 
     const pieData = [
