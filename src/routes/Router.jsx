@@ -43,7 +43,7 @@ export const router = createBrowserRouter([
             {
                 path: '/issue',
                 Component: Allissue,
-                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json()),
+                loader: () => fetch('/Issuecatagory.json').then(res => res.json()),
                 hydrateFallbackElement: <Loading></Loading>
 
             },
@@ -54,13 +54,13 @@ export const router = createBrowserRouter([
             {
                 path: '/coverage',
                 Component: Coverage,
-                loader: () => fetch('../../public/serviceCenters.json').then(res => res.json()),
+                loader: () => fetch('/serviceCenters.json').then(res => res.json()),
                 hydrateFallbackElement: <Loading></Loading>
             },
             {
                 path: '/issueDetails/:id',
                 element: <PrivateRoute><IssueDetails></IssueDetails></PrivateRoute>,
-                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json()),
+                loader: () => fetch('/Issuecatagory.json').then(res => res.json()),
                 hydrateFallbackElement: <Loading></Loading>
             }
         ],
@@ -93,13 +93,13 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/report-issue',
                 element: <PrivateRoute><UserRoute><Report_issue></Report_issue></UserRoute>  </PrivateRoute>,
-                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json()),
+                loader: () => fetch('/Issuecatagory.json').then(res => res.json()),
                 hydrateFallbackElement:<Loading></Loading>
             },
             {
                 path: '/dashboard/my-issue',
                 element: <PrivateRoute><UserRoute><MyIssuePage></MyIssuePage></UserRoute></PrivateRoute>,
-                loader: () => fetch('../../public/Issuecatagory.json').then(res => res.json()),
+                loader: () => fetch('/Issuecatagory.json').then(res => res.json()),
                 hydrateFallbackElement: <Loading></Loading>
             },
             {
