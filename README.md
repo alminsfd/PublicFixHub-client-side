@@ -47,3 +47,22 @@ Use the following credentials to explore the admin dashboard:
 
 ---
 
+## 📦 Dependencies
+- React
+- TanStack Query
+- Axios
+- Firebase
+- SweetAlert2
+- React Router
+- Leaflet
+- Recharts
+- etc.
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the Repository
+```bash
+git clone <repository-url>
+
