@@ -64,5 +64,5 @@ Use the following credentials to explore the admin dashboard:
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone <repository-url>
+git clone <https://github.com/alminsfd/PublicFixHub-client-side.git>
 
