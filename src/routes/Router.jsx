@@ -59,7 +59,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/issueDetails/:id',
-                element: <PrivateRoute><IssueDetails></IssueDetails></PrivateRoute>,
+                element: <IssueDetails></IssueDetails>,
                 loader: () => fetch('/Issuecatagory.json').then(res => res.json()),
                 hydrateFallbackElement: <Loading></Loading>
             }
@@ -94,7 +94,7 @@ export const router = createBrowserRouter([
                 path: '/dashboard/report-issue',
                 element: <PrivateRoute><UserRoute><Report_issue></Report_issue></UserRoute>  </PrivateRoute>,
                 loader: () => fetch('/Issuecatagory.json').then(res => res.json()),
-                hydrateFallbackElement:<Loading></Loading>
+                hydrateFallbackElement: <Loading></Loading>
             },
             {
                 path: '/dashboard/my-issue',
