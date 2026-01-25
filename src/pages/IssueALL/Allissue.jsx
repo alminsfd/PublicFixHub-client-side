@@ -38,7 +38,7 @@ const Allissue = () => {
 
     const allIssues = data?.issues || [];
     const totalPages = data?.totalPages || 1;
-  
+
 
 
     const statusColor = {
