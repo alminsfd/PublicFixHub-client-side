@@ -47,3 +47,26 @@ Use the following credentials to explore the admin dashboard:
 
 ---
 
+## 📦 Dependencies
+- React
+- TanStack Query
+- Axios
+- Firebase
+- SweetAlert2
+- React Router
+- Leaflet
+- Recharts
+- etc.
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/alminsfd/PublicFixHub-client-side.git
+
+## Run Locally
+npm install  
+npm run dev
+
