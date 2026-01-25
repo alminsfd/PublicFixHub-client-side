@@ -7,15 +7,14 @@ import { MdAssignmentAdd, MdManageAccounts, MdOutlineAssignmentLate, MdOutlinePa
 import useRole from '../../hooks/useRole';
 import { FaUserShield, FaUserTie } from 'react-icons/fa';
 
-
 const DashboardLayout = () => {
     const { role } = useRole()
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content">
+            <div className=" pt-20 drawer-content">
                 {/* Navbar */}
-                <nav className="navbar w-full bg-base-300">
+                <nav className=" fixed top-0 z-50  navbar w-full bg-base-300">
                     <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-square btn-ghost">
                         {/* Sidebar toggle icon */}
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path></svg>
@@ -118,7 +117,7 @@ const DashboardLayout = () => {
                                 </li>
                                 <li>
                                     <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage issue" to="/dashboard/manage-user">
-                                        <MdManageAccounts  size={18}/>
+                                        <MdManageAccounts size={18} />
                                         <span className="is-drawer-close:hidden">Manage user</span>
                                     </NavLink>
                                 </li>
