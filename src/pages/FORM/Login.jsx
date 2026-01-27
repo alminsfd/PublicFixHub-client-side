@@ -13,30 +13,36 @@ const Login = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const axiosSecure = useAxiosSecure();
-    
+
+    const demoUser = {
+        email: "demo@user.com",
+        password: "Demo@123"
+    };
+
 
 
     const {
         register,
         handleSubmit,
         formState: { errors },
+        setValue
     } = useForm()
 
 
     const handleLogin = async (data) => {
         try {
-          
+
             const result = await signInUser(data.email, data.password);
             const loggedUser = result.user;
             setUser(loggedUser);
 
-          
+
             const res = await axiosSecure.get(`/users/${loggedUser.email}`);
             const User = res.data;
 
-           
 
-           
+
+
             if (User.role === "staff") {
                 navigate("/dashboard");
             }
@@ -92,6 +98,7 @@ const Login = () => {
                         <div>
                             <label className="block font-medium text-gray-700 mb-1">Email</label>
                             <input
+                                id='email'
                                 type="email"
                                 {...register('email', { required: true })}
                                 className="input input-bordered w-full"
@@ -106,6 +113,7 @@ const Login = () => {
                         <div>
                             <label className="block font-medium text-gray-700 mb-1">Password</label>
                             <input
+                                id='password'
                                 type="password"
                                 {...register('password', { required: true, minLength: 6 })}
                                 className="input input-bordered w-full"
@@ -147,6 +155,17 @@ const Login = () => {
 
                     {/* Social login */}
                     <div className="mt-6">
+                        <p className=' text-center mb-2'>OR</p>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setValue("email", demoUser.email);
+                                setValue("password", demoUser.password);
+                            }}
+                            className="btn w-full mb-2 btn-primary text-white"
+                        >
+                            Demo Credential
+                        </button>
                         <SocialLogin />
                     </div>
                 </div>
