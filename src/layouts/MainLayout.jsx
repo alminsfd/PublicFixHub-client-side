@@ -10,13 +10,15 @@ const MainLayout = () => {
                 <Outlet></Outlet>
             </div>
             <Footer
-                links={[
-                    "Home",
-                    "Report Issue",
-                    "Track Status",
-                    "Premium",
-                    "About",
-                ]}
+                links={
+                    [
+                        "Home",
+                        "Report Issue",
+                        "Track Status",
+                        "Premium",
+                        "About",
+                    ]
+                }
             ></Footer>
         </>
 

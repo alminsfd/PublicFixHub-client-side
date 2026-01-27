@@ -3,6 +3,7 @@
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 import { FaMapMarkerAlt, FaPhone, FaEnvelope } from "react-icons/fa";
 import logo from '../../assets/Modern Logo with Beveled Gear and Gradient Pin.png';
+import { Link } from "react-router";
 
 
 export default function Footer({ links }) {
@@ -31,8 +32,19 @@ export default function Footer({ links }) {
                                 key={i}
                                 className="hover:text-white transition cursor-pointer hover:underline"
                             >
+                                <Link
 
-                                {item}
+                                    to={
+                                        item === "Home" ? "/" :
+                                            item === "Report Issue" ? "/dashboard/report-issue" :
+                                                item === "Track Status" ? "/dashboard/my-issue" :
+                                                    item === "Premium" ? "/dashboard/my-profile" :
+                                                        "/about"
+                                    }
+
+                                >{item}</Link>
+
+
                             </li>
                         ))}
                     </ul>
@@ -58,9 +70,10 @@ export default function Footer({ links }) {
                 <div>
                     <h3 className="text-xl font-semibold text-white mb-3">Follow Us</h3>
                     <div className="flex items-center gap-4 text-2xl">
-                        <FaFacebook className="hover:text-white cursor-pointer transition" />
-                        <FaTwitter className="hover:text-white cursor-pointer transition" />
-                        <FaInstagram className="hover:text-white cursor-pointer transition" />
+                        <a href="https://www.facebook.com/ah5232041"><FaFacebook className="hover:text-white cursor-pointer transition" /></a>
+                        <a href="https://x.com/al_amin30023"><FaTwitter className="hover:text-white cursor-pointer transition" /></a>
+                        <a href="https://www.instagram.com/ah5232041/"><FaInstagram className="hover:text-white cursor-pointer transition" />
+                        </a>
                     </div>
                 </div>
             </div>
