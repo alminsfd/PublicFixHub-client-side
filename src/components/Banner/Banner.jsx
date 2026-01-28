@@ -6,26 +6,34 @@ import Banner3 from '../../assets/Banner-3.png';
 import Banner4 from '../../assets/banner-4.png';
 const Banner = () => {
     return (
-        <Carousel
-            className='mt-10'
-            autoPlay={true}
-            infiniteLoop={true}
-            dynamicHeight={true}
-            emulateTouch={true}
-        >
-            <div>
-                <img src={Banner1} />
+        <>
+            <Carousel
+                className='mt-10'
+                autoPlay={true}
+                infiniteLoop={true}
+                dynamicHeight={true}
+                emulateTouch={true}
+            >
+                <div>
+                    <img className='w-[50px]' src={Banner1} />
+                </div>
+                <div>
+                    <img className='w-[50px]' src={Banner2} />
+                </div>
+                <div>
+                    <img className='w-[50px]' src={Banner3} />
+                </div>
+                <div>
+                    <img className='w-[50px]' src={Banner4} />
+                </div>
+            </Carousel>
+            <div className="flex justify-center text-4xl mt-6 animate-bounce text-gray-800">
+                ↓ Scroll
             </div>
-            <div>
-                <img src={Banner2} />
-            </div>
-            <div>
-                <img className='w-[50px]' src={Banner3} />
-            </div>
-            <div>
-                <img className='w-[50px]' src={Banner4} />
-            </div>
-        </Carousel>
+
+
+        </>
+
     );
 };
 
